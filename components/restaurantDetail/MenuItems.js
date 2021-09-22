@@ -1,6 +1,6 @@
 import React from "react";
-import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
-// import { Divider } from "react-native-elements";
+import { View, StyleSheet, ScrollView } from "react-native";
+import { Divider } from "react-native-elements";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { useDispatch, useSelector } from "react-redux";
 import { ADD_TO_CART } from "../../redux/actionsType";
@@ -40,11 +40,11 @@ export default function MenuItems({restaurantName, foods, hideCheckbox, marginLe
             <FoodInfo food={food} />
             <FoodImage food={food} marginLeft={marginLeft ? marginLeft : 0} />
           </View>
-          {/* <Divider
+          <Divider
             width={0.5}
             orientation="vertical"
             style={{ marginHorizontal: 20 }}
-          /> */}
+          />
         </View>
       ))}
     </ScrollView>

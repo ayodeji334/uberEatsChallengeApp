@@ -5,7 +5,8 @@ import {
     View,  
     TouchableOpacity, 
     ScrollView,
-    StatusBar
+    StatusBar,
+    SafeAreaView
 } from 'react-native';
 import { useFonts } from "expo-font";
 import { Ionicons } from '@expo/vector-icons';
@@ -30,7 +31,7 @@ export default function Register({ navigation }) {
                             padding: 8, 
                             marginTop: 8, 
                             backgroundColor: "#e7e7e7",
-                            borderRadius: 9999
+                            borderRadius: 9
                         }} activeOpacity={0.4} onPress={() => navigation.goBack()}>
                             <Ionicons name="md-chevron-back-sharp" size={21} color="#000" />
                         </TouchableOpacity>
@@ -50,7 +51,7 @@ export default function Register({ navigation }) {
     }
 
     return (
-        <React.Fragment>
+        <SafeAreaView style={{ backgroundColor: '#fff', height: '100%'}}>
             <StatusBar
                 barStyle="dark-content"
                 backgroundColor="#fff"
@@ -82,7 +83,7 @@ export default function Register({ navigation }) {
                     </View>
                 </View>
             </ScrollView>  
-        </React.Fragment>
+        </SafeAreaView>
        );
 }
 

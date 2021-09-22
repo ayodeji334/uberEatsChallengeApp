@@ -9,7 +9,7 @@ import firebase from '../../firebase/config';
 import { useDispatch } from 'react-redux';
 import { LOGIN_SUCCESS } from '../../redux/actionsType';
 
-export default function LoginForm({ navigation }) {
+export default function LoginForm() {
     const [modalVisibility, setModalVisibility] = useState(false);
     const [message, setMessage] = useState("");
     const [alertType, setAlertType] = useState("");
@@ -17,7 +17,23 @@ export default function LoginForm({ navigation }) {
     const dispatch = useDispatch()
     const handleCloseModal = () => setModalVisibility(false);
 
-    const handleSubmit = async (values, actions) => {
+    const initialValues = { 
+        email: '', 
+        password: '' 
+    };
+
+    const loginValidationSchema = Yup.object().shape({
+        email: Yup
+            .string()
+            .email("Please enter valid email")
+            .required('Email Address is Required'),
+        password: Yup
+            .string()
+            .min(8, ({ min }) => `Password must be at least ${min} characters`)
+            .required('Password is required'),
+    });
+
+    const handleLogin = async (values, actions) => {
         firebase.auth().signInWithEmailAndPassword(values.email, values.password).then(({user}) => {
             actions.setSubmitting(false);
             actions.resetForm({
@@ -52,28 +68,12 @@ export default function LoginForm({ navigation }) {
         });
     }
 
-    const initialValues = { 
-        email: '', 
-        password: '' 
-    };
-
-    const loginValidationSchema = Yup.object().shape({
-        email: Yup
-            .string()
-            .email("Please enter valid email")
-            .required('Email Address is Required'),
-        password: Yup
-            .string()
-            .min(8, ({ min }) => `Password must be at least ${min} characters`)
-            .required('Password is required'),
-    });
-
     return (
         <React.Fragment>
             <Formik
                 initialValues={initialValues}
                 validationSchema={loginValidationSchema}
-                onSubmit={(values, actions) => handleSubmit(values, actions)}
+                onSubmit={(values, actions) => handleLogin(values, actions)}
             >
                 {(props) => (
                     <>
@@ -94,12 +94,12 @@ export default function LoginForm({ navigation }) {
                             error={props.errors.password}
                             touched={props.touched.password}
                         />
-                        <Text 
+                        {/* <Text 
                             style={styles.link} 
                             onPress={() => {navigation.navigate('ForgetPassword') }}
                         >
                             Forget Password
-                        </Text>
+                        </Text> */}
                         <TouchableOpacity
                             disabled={!props.isValid || props.isSubmitting}
                             activeOpacity={0.8}

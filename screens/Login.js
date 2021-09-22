@@ -1,16 +1,18 @@
-import React, {useLayoutEffect} from 'react';
+import React, { useLayoutEffect } from 'react';
 import { 
-    StyleSheet,  
+    StyleSheet, 
     Text, 
-    View, 
+    View,  
     TouchableOpacity, 
-    StatusBar
+    ScrollView,
+    StatusBar,
+    SafeAreaView
 } from 'react-native';
+import { useFonts } from "expo-font";
 import { Ionicons } from '@expo/vector-icons';
 import LoginForm from '../components/form/LoginForm';
 
-
-export default function Login({navigation}) {
+export default function Login({ navigation }) {
     useLayoutEffect(() => {
         navigation.setOptions({
             headerStyle: {
@@ -19,14 +21,17 @@ export default function Login({navigation}) {
                 elevation: 0,
                 shadowOpacity: 0,
             },
+            headerTitleStyle: {
+                display: "none"
+            },
             headerLeft: () => {
                 return (
                     <View style={{padding: 20, marginTop: 8, marginBottom: 10}}>
                         <TouchableOpacity style={{
                             padding: 8, 
-                            marginTop: 1, 
+                            marginTop: 8, 
                             backgroundColor: "#e7e7e7",
-                            borderRadius: 9999
+                            borderRadius: 9
                         }} activeOpacity={0.4} onPress={() => navigation.goBack()}>
                             <Ionicons name="md-chevron-back-sharp" size={21} color="#000" />
                         </TouchableOpacity>
@@ -36,48 +41,63 @@ export default function Login({navigation}) {
         })
     }, []);
 
+    const [loaded] = useFonts({
+        Poppins: require('../assets/fonts/Poppins-Medium.ttf'),
+        PoppinsBold: require('../assets/fonts/Poppins-Black.ttf')
+    });
+    
+    if (!loaded) {
+        return null;
+    }
+
     return (
-        <React.Fragment>
+        <SafeAreaView style={{ backgroundColor: '#fff', height: '100%'}}>
             <StatusBar
                 barStyle="dark-content"
                 backgroundColor="#fff"
             />
-            <View style={styles.container}>
-                <View style={styles.greetingInfo}>
-                    <Text style={styles.title}>Welcome Back</Text>
-                    <Text style={styles.description}>
-                        Fill in your credentails to get back in
-                    </Text>
-                </View>
-                <View style={styles.formContainer}>
-                    <LoginForm navigation={navigation} />
-                    <Text style={{marginTop: 35, textAlign:"center", fontFamily: "Poppins" }}>
-                        Don't have an account? {" "}
-                        <Text 
-                            style={styles.link} 
-                            onPress={()=>{navigation.navigate('Register')}}> 
-                            Sign Up
+            <ScrollView>            
+                <View style={styles.container}>
+                    <View style={styles.greetingInfo}>
+                        <Text style={styles.title}>Welcome Back</Text>
+                        <Text style={styles.description}>
+                            Fill in your credential to get in.
                         </Text>
-                    </Text>
+                    </View>
+                    <View style={styles.formContainer}>
+                        <LoginForm />
+                        <Text style={{
+                            marginTop: 35,
+                            textAlign:"center", 
+                            fontFamily: "Poppins", 
+                            fontSize: 14 
+                        }}>
+                            Don't have an account? {" "}
+                            <Text
+                                style={styles.link} 
+                                onPress={()=>{navigation.navigate('Register')}}
+                            > 
+                                Sign up
+                            </Text>
+                        </Text>
+                    </View>
                 </View>
-            </View>
-        </React.Fragment>
-    );
+            </ScrollView>  
+        </SafeAreaView>
+       );
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#ffffff',
+        backgroundColor: '#fff',
         fontFamily: "Poppins",
+        paddingTop: 10,
+        paddingBottom: 130
     },
-    error: {
-        color: "#d40611",
-        padding: 10,
-        textAlign: "center",
-        fontWeight: "600",
-        fontFamily: "Poppins",
-        fontSize: 13
+    label: {
+        fontSize: 13,
+        fontFamily: "PoppinsBold",
     },
     title: {
         fontSize: 27,
@@ -97,6 +117,9 @@ const styles = StyleSheet.create({
         fontWeight: "500",
         color: "#000",
     },
+    formContainer: {
+        paddingHorizontal: 30
+    },
     greetingInfo: {
         color: "#000000",
         marginTop: 20,
@@ -105,8 +128,23 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center"
     },
-    formContainer: {
-        paddingHorizontal: 30
+    buttonText: {
+        textTransform: "uppercase",
+        color: "white",
+        textAlign: "center",
+        fontFamily: "PoppinsBold",
+        fontSize: 13
+    },
+    button: {
+        backgroundColor: "#000",
+        paddingVertical: 18,
+        borderRadius: 50,
+        width: "100%",
+        marginTop: 15,
+    },
+    image: {
+        width: 100,
+        height: 120,
     },
     text: {
         color: "white",
@@ -115,8 +153,16 @@ const styles = StyleSheet.create({
         textAlign: "center"
     },
     link: {
-      paddingHorizontal: 12,
-      marginLeft: 14,
+      paddingLeft: 0,
+      marginLeft: 5,
       color: "#dc143c"
+    },
+    disabled: {
+        opacity: .56,
+        backgroundColor: "#000",
+        paddingVertical: 17,
+        borderRadius: 50,
+        width: "100%",
+        marginTop: 15,
     }
 });

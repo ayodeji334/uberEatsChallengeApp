@@ -4,10 +4,10 @@ import React, { useState } from 'react';
 import TextInputField from './TextInputField';
 import PasswordInputField from './PasswordInputField';
 import EmailInputField from './EmailInputField';
-// import { AUTHENTICATION_SUCCESS } from '../config/Reducer';
 import AlertModalBox from '../general/AlertModalBox';
 import firebase from '../../firebase/config';
 import * as Yup from 'yup';
+import { useDispatch } from 'react-redux';
 
 
 export default function RegisterForm() {
@@ -15,6 +15,7 @@ export default function RegisterForm() {
     const [message, setMessage] = useState("");
     const [alertType, setAlertType] = useState("");
 
+    const dispatch = useDispatch();
     const handleCloseModal = () => setModalVisibility(false);
 
     const initialValues = { 
@@ -58,7 +59,7 @@ export default function RegisterForm() {
             
         }).catch(err => {
             actions.setSubmitting(false);
-            console.log(err.code)
+
             if(err.code === 'auth/email-already-in-use'){
                 setMessage("Email already used by another person");
             }else if(err.code === 'auth/wrong-password'){
