@@ -5,10 +5,10 @@ import {
     Image, 
     View, 
     TouchableOpacity, 
-    StatusBar} from 'react-native';
+    StatusBar
+} from 'react-native';
 
 export default function Welcome({navigation}) {
-
   return (
     <React.Fragment>
         <StatusBar 
@@ -20,7 +20,7 @@ export default function Welcome({navigation}) {
                 <Image source={require('../assets/icon.png')} style={styles.image}/>
             </View>
             <View style={styles.detail}>
-                <View>
+                <View style={{ flexDirection: 'column', justifyContent: 'center'}}>
                     <Text style={styles.title}>Welcome to Instant Meals</Text>
                     <Text style={styles.description}>
                         Order food and get your package where few minutes
@@ -29,10 +29,18 @@ export default function Welcome({navigation}) {
                 <View style={{ paddingVertical: 20, width: "80%"}}>
                     <TouchableOpacity
                         activeOpacity={0.4}
-                        onPress={() => navigation.navigate("Login")}
+                        onPress={() => navigation.navigate("Register")}
                         style={[styles.button, styles.filledBtn ]}>
                         <Text style={styles.filledBtnText}>
                             Get Started
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        activeOpacity={0.4}
+                        onPress={() => navigation.navigate("Login")}
+                        style={[styles.button, styles.outlineBtn ]}>
+                        <Text style={styles.outlineBtnText}>
+                            Login
                         </Text>
                     </TouchableOpacity>
                 </View>
@@ -46,20 +54,19 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        fontFamily: "Poppins"
+        fontFamily: "Poppins",
+        marginTop: -40
     },
     imageContainer: {
         flex: 1,
         backgroundColor: "#000000",
-        marginTop: -20,
-        position: 'relative'
     },
     detail: {
         flex: 1,
         flexDirection: "column",
         alignItems: 'center',
         // justifyContent: 'center',
-        paddingTop: 60,
+        paddingTop: 13,
         paddingHorizontal: 45,
     },
     image: {
@@ -68,7 +75,7 @@ const styles = StyleSheet.create({
         height: '100%'
     },
     title: {
-        fontSize: 28,
+        fontSize: 24,
         fontFamily: "PoppinsBold",
         letterSpacing: 1,
         textAlign: "center",
@@ -81,7 +88,6 @@ const styles = StyleSheet.create({
         letterSpacing: 1,
         paddingBottom: 40,
         textAlign: "center",
-        maxWidth: "65%",
         fontWeight: "500",
         color: "#000000",
     },

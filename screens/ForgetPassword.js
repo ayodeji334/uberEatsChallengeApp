@@ -1,44 +1,67 @@
 import React from 'react';
 import { useState } from 'react';
-import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity, StatusBar } from 'react-native';
+import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity, StatusBar, SafeAreaView } from 'react-native';
 import { useFonts } from "expo-font";
 import { Ionicons } from '@expo/vector-icons';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import firebase from '../firebase/config';
+import * as Yup from 'yup'
+import { Formik } from 'formik';
+import EmailInputField from '../components/form/EmailInputField';
 
 export default function ForgetPassword({navigation}) {
-    const [loading, setLoading] = React.useState(false);
-    const [email, setEmail] = useState("");
+    // const [loading, setLoading] = React.useState(false);
+    // const [email, setEmail] = useState("");
 
-    const handleRetrieveUserPassword = async () => {
-        setLoading(true);
-
-        if(email === ""){
-            setLoading(false);
-            return alert("Email is required");
-        }
-        
-        const users = await AsyncStorage.getItem("@users");
-        const all_users = JSON.parse(users);
-
-        const matched_users = all_users.filter(user => user.email.toLocaleLowerCase() === email.toLocaleLowerCase());
-
-        if(matched_users.length > 0){
-            alert("Your password is " + matched_users[0].password);
-
-            setLoading(false);
-        }
-
-        if(matched_users.length === 0 ){
-            alert("The email doesn't matched any record. Try again");
-
-            setLoading(false);
-        }
+    const initialValues = { 
+        email: ''
     };
+
+    const formValidationSchema = Yup.object().shape({
+        email: Yup
+            .string()
+            .email("Please enter valid email")
+            .required('Email Address is Required')
+    });
+    
+    const handleRetrieveUserPassword = async (values, actions) => {
+        firebase.auth().signInWithEmailAndPassword(values.email, values.password).then(({user}) => {
+            actions.setSubmitting(false);
+            actions.resetForm({
+                values: initialValues
+            });
+            
+            dispatch({
+                type: LOGIN_SUCCESS,
+                payload: {
+                    email: user.email,
+                    displayName:  user.displayName,
+                    uid: user.uid,
+                    isEmailVerified: user.emailVerified,
+                    photoUrl: user.photoURL
+                }
+            });
+        }).catch(err => {
+            actions.setSubmitting(false);
+
+            if(err.code === 'auth/user-not-found'){
+                setMessage("The crendential does not match any record");
+            }else if(err.code === 'auth/wrong-password'){
+                setMessage("Invalid email or password");
+            }else if(err.code === 'auth/network-error'){
+                setMessage("Please make sure you are connect to the internet. Then try again");
+            }else{
+                setMessage("Something went wrong. Please try again");
+            }
+
+            setAlertType("error");
+            setModalVisibility(true);
+        });
+    }
 
     React.useLayoutEffect(() => {
         navigation.setOptions({
             headerStyle: {
-                backgroundColor: "#dc143c",
+                backgroundColor: "#fff",
                 borderBottomWidth: 0,
                 elevation: 0,
                 shadowOpacity: 0,
@@ -48,9 +71,14 @@ export default function ForgetPassword({navigation}) {
             },
             headerLeft: () => {
                 return (
-                    <View style={{padding: 22, marginTop: 10}}>
-                        <TouchableOpacity activeOpacity={0.4} onPress={() => navigation.goBack()}>
-                            <Ionicons name="arrow-back" size={28} color="white" />
+                    <View style={{padding: 20, marginTop: 8, marginBottom: 10}}>
+                        <TouchableOpacity style={{
+                            padding: 8, 
+                            marginTop: 8, 
+                            backgroundColor: "#e7e7e7",
+                            borderRadius: 9
+                        }} activeOpacity={0.4} onPress={() => navigation.goBack()}>
+                            <Ionicons name="md-chevron-back-sharp" size={21} color="#000" />
                         </TouchableOpacity>
                     </View>
                 )
@@ -69,57 +97,55 @@ export default function ForgetPassword({navigation}) {
     
 
     return (
-        <React.Fragment>
+        <SafeAreaView style={{ backgroundColor: '£fff', height: '100%'}}>
             <StatusBar
-                barStyle="light-content"
-                backgroundColor="#dc143c"
+                barStyle="dark-content"
+                backgroundColor="#fff"
             /> 
             <View style={styles.container}>
                 <View style={styles.greetingInfo}>
-                    <Text style={styles.title}>Reset Your Password</Text>
+                    <Text style={styles.title}>Password Recovery</Text>
                     <Text style={styles.description}>
-                        Fill in your email in the box below to reset your password.
+                        Fill in your email in the box below to recovery your password.
                     </Text>
                 </View>
                 <View style={styles.formContainer}>
-                    <View style={{paddingVertical: 30}}>
-                        <Text style={styles.label}>Email</Text>
-                        <TextInput 
-                            style={styles.input}
-                            underlineColorAndroid = "transparent"
-                            placeholder = "youremail@gmail.com"
-                            placeholderTextColor = "#000000"
-                            autoCapitalize = "none"
-                            returnKeyType = "next"
-                            keyboardType='email-address'
-                            textContentType="emailAddress"
-                            onChangeText={(text)=>{
-                                setEmail(text)
-                            }}
-                            blurOnSubmit={true}
-                            value={email}
-                        />
-                        <TouchableOpacity 
-                            disabled={loading}
-                            activeOpacity={0.8}
-                            onPress={handleRetrieveUserPassword}
-                            style={loading ? styles.disabled : styles.button}>
-                                {  loading ?
-                                    <Text style={styles.buttonText}>Loading...</Text> : 
-                                    <Text style={styles.buttonText}>Retrieve Password</Text>
-                                }
-                        </TouchableOpacity>
-                    </View>
+                    
+                    <Formik
+                        initialValues={initialValues}
+                        validationSchema={formValidationSchema}
+                        onSubmit={(values, actions) => handleRetrieveUserPassword(values, actions)}
+                    >
+                        {(props) => (
+                            <View style={{paddingVertical: 30}}>
+                                <EmailInputField
+                                    currentValue={props.values.email}
+                                    fieldName="email"
+                                    handleBlur={props.handleBlur}
+                                    handleChange={props.handleChange}
+                                    error={props.errors.email}
+                                    touched={props.touched.email}
+                                /> 
+                                <TouchableOpacity
+                                    disabled={!props.isValid || props.isSubmitting}
+                                    activeOpacity={0.8}
+                                    onPress={props.handleSubmit}
+                                    style={props.isSubmitting ? styles.disabled : styles.button}>
+                                    {!props.isSubmitting ? <Text style={styles.buttonText}>Send Token</Text> : <Text style={styles.buttonText}>Loading...</Text> }
+                                </TouchableOpacity>
+                            </View>
+                        )}
+                    </Formik>
                 </View>
             </View>
-        </React.Fragment>
+        </SafeAreaView>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#dc143c',
+        backgroundColor: '#fff',
         fontFamily: "Poppins",
         paddingTop:  20
     },
@@ -150,12 +176,25 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
     formContainer: {
-        flex: 1,
-        backgroundColor: "#fff",
-        color: '#fff',
-        paddingHorizontal: 20,
-        borderTopLeftRadius: 30,
-        borderTopRightRadius: 30
+        paddingHorizontal: 30
+    },
+    greetingInfo: {
+        color: "#000000",
+        marginTop: 20,
+        paddingTop: 10,
+        paddingBottom: 10,
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    description: {
+        fontSize: 15,
+        fontFamily: "Poppins",
+        letterSpacing: 1,
+        paddingBottom: 40,
+        textAlign: "center",
+        maxWidth: "65%",
+        fontWeight: "500",
+        color: "#000",
     },
     buttonText: {
         textTransform: "uppercase",
@@ -164,13 +203,20 @@ const styles = StyleSheet.create({
         fontFamily: "PoppinsBold",
         fontSize: 13,
     },
+    title: {
+        fontSize: 27,
+        fontFamily: "PoppinsBold",
+        letterSpacing: 1,
+        textAlign: "center",
+        color: "#000",
+        paddingVertical: 14
+    },
     button: {
-        backgroundColor: "#dc143c",
-        color: "#fff",
-        paddingVertical: 18,
-        marginVertical: 20,
+        backgroundColor: "#000000",
+        paddingVertical: 20,
         borderRadius: 50,
-        width: "100%"
+        width: "100%",
+        marginTop: 25,
     },
     text: {
         color: "white",

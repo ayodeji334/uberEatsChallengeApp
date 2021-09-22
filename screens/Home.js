@@ -1,8 +1,5 @@
-import React, { useEffect, useState, useLayoutEffect } from "react";
-import { View, Text, SafeAreaView, ScrollView, TouchableOpacity } from "react-native";
-// import { Divider } from "react-native-elements";
-import { Ionicons } from '@expo/vector-icons';
-import BottomTabs from "../components/home/BottomTabs";
+import React, { useEffect, useState } from "react";
+import { View, SafeAreaView, ScrollView } from "react-native";
 import Categories from "../components/home/Categories";
 import HeaderTabs from "../components/home/HeaderTabs";
 import RestaurantItems, { localRestaurants } from "../components/home/RestaurantItems";
@@ -37,34 +34,6 @@ export default function Home({ navigation }) {
       });
   };
 
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerStyle: {
-        backgroundColor: "#fff",
-        borderBottomWidth: 0,
-        elevation: 0,
-        shadowOpacity: 0
-      },
-      headerLeft: () => {
-        return (
-            <View style={{padding: 20, marginTop: 8, marginBottom: 10}}>
-                <TouchableOpacity 
-                  style={{
-                    padding: 8, 
-                    marginTop: 1, 
-                    backgroundColor: "#e7e7e7",
-                    borderRadius: 9999
-                  }} 
-                  activeOpacity={0.4} 
-                  onPress={() => navigation.goBack()}>
-                    <Ionicons name="menu-outline" size={21} color="#000" />
-                </TouchableOpacity>
-            </View>
-        )
-      }
-    })
-  }, []);
-
   useEffect(() => {
     getRestaurantsFromYelp();
   }, [city, activeTab]);
@@ -83,7 +52,7 @@ export default function Home({ navigation }) {
         />
       </ScrollView>
       {/* <Divider width={1} /> */}
-      <BottomTabs />
+      {/* <BottomTabs /> */}
     </SafeAreaView>
   );
 }

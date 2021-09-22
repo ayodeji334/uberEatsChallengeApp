@@ -1,28 +1,15 @@
 import React, { useEffect } from 'react';
-import Welcome from "../screens/Welcome";
-import Login from '../screens/Login';
-import Home from '../screens/Home';
-import ForgetPassword from '../screens/ForgetPassword';
-import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
-import Register from '../screens/Register';
 import { useDispatch, useSelector } from 'react-redux';
-import RestaurantDetail from '../screens/RestaurantDetail';
 import firebase from '../firebase/config'; 
 import { LOGIN_SUCCESS } from '../redux/actionsType';
+import AppStack from './AppStack';
+import AuthStack from './AuthStack';
 
-const Stack = createStackNavigator();
 
 export default function RootNavigation (){
     const { isAuthenticated } = useSelector(state => state.auth);
     const dispatch = useDispatch();
-
-    const screenOption = {
-        headerTitleStyle: {
-            display: "none"
-        },
-        headerShown: true
-    };
 
     console.log(isAuthenticated);
 
@@ -47,23 +34,8 @@ export default function RootNavigation (){
 
     return(
         <NavigationContainer>
-            <Stack.Navigator initialRouteName="Home">
-                <Stack.Screen
-                    name="Home"
-                    component={Home}
-                    options={screenOption}
-                />
-                <Stack.Screen
-                    name="RestaurantDetail"
-                    component={RestaurantDetail}
-                    options={screenOption}
-                />
-                <Stack.Screen
-                    name="Welcome"
-                    component={Welcome}
-                    options={screenOption}
-                />
-            </Stack.Navigator>
+            {/* <AppStack /> */}
+            <AuthStack />
         </NavigationContainer>
     )
 };

@@ -7,7 +7,8 @@ import { useEffect } from 'react';
 import configureStore from './redux/store';
 import { Provider } from 'react-redux';
 import RootNavigation from './navigations/index';
-import firebase from './firebase/config'; 
+import { ThemeProvider } from 'react-native-elements';
+// import firebase from './firebase/config'; 
 
 //Prevent splashscreen from auto hiding until the app finish loading auth state
 SplashScreen.preventAutoHideAsync();
@@ -35,9 +36,11 @@ export default function App() {
 
   return (
     <SafeAreaProvider>
-      <Provider store={store}>
-        <RootNavigation />
-      </Provider>
+      <ThemeProvider>
+        <Provider store={store}>
+          <RootNavigation />
+        </Provider>
+      </ThemeProvider>
     </SafeAreaProvider>
   )
 };
