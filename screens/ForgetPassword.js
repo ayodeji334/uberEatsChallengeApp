@@ -9,9 +9,6 @@ import { Formik } from 'formik';
 import EmailInputField from '../components/form/EmailInputField';
 
 export default function ForgetPassword({navigation}) {
-    // const [loading, setLoading] = React.useState(false);
-    // const [email, setEmail] = useState("");
-
     const initialValues = { 
         email: ''
     };
@@ -110,7 +107,6 @@ export default function ForgetPassword({navigation}) {
                     </Text>
                 </View>
                 <View style={styles.formContainer}>
-                    
                     <Formik
                         initialValues={initialValues}
                         validationSchema={formValidationSchema}
@@ -149,10 +145,6 @@ const styles = StyleSheet.create({
         fontFamily: "Poppins",
         paddingTop:  20
     },
-    image: {
-        width: 100,
-        height: 120,
-    },
     input: {
         borderRadius: 10,
         borderColor: "#cbcaca",
@@ -187,7 +179,6 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
     description: {
-        fontSize: 15,
         fontFamily: "Poppins",
         letterSpacing: 1,
         paddingBottom: 40,
@@ -204,7 +195,7 @@ const styles = StyleSheet.create({
         fontSize: 13,
     },
     title: {
-        fontSize: 27,
+        fontSize: 25,
         fontFamily: "PoppinsBold",
         letterSpacing: 1,
         textAlign: "center",

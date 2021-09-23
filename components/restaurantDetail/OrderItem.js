@@ -10,7 +10,7 @@ export default function OrderItem({ item }) {
         justifyContent: "space-between",
         padding: 20,
         borderBottomWidth: 1,
-        borderBottomColor: "#999",
+        borderBottomColor: "#e7e7e7",
       }}
     >
       <Text style={{ fontWeight: "600", fontSize: 15, fontFamily: 'Poppins' }}>{title}</Text>

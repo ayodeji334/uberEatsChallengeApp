@@ -2,7 +2,7 @@ import React from 'react';
 import { 
     StyleSheet, 
     Text, 
-    Image, 
+    ImageBackground, 
     View, 
     TouchableOpacity, 
     StatusBar
@@ -12,23 +12,24 @@ export default function Welcome({navigation}) {
   return (
     <React.Fragment>
         <StatusBar 
-            barStyle="dark-content"
-            backgroundColor="#ffffff"
+            barStyle="light-content"
+            backgroundColor='#000'
+            translucent={false}
         />
         <View style={styles.container}>
             <View style={styles.imageContainer}>
-                <Image source={require('../assets/icon.png')} style={styles.image}/>
+                <ImageBackground source={require('../assets/images/bg2.jpg')} style={styles.image} />
             </View>
             <View style={styles.detail}>
                 <View style={{ flexDirection: 'column', justifyContent: 'center'}}>
-                    <Text style={styles.title}>Welcome to Instant Meals</Text>
+                    <Text style={styles.title}>Welcome to Instant <Text style={{color: 'green'}}>Meals</Text></Text>
                     <Text style={styles.description}>
                         Order food and get your package where few minutes
                     </Text>
                 </View> 
-                <View style={{ paddingVertical: 20, width: "80%"}}>
+                <View style={{ paddingVertical: 5, width: "60%"}}>
                     <TouchableOpacity
-                        activeOpacity={0.4}
+                        activeOpacity={0.7}
                         onPress={() => navigation.navigate("Register")}
                         style={[styles.button, styles.filledBtn ]}>
                         <Text style={styles.filledBtnText}>
@@ -36,7 +37,7 @@ export default function Welcome({navigation}) {
                         </Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        activeOpacity={0.4}
+                        activeOpacity={0.7}
                         onPress={() => navigation.navigate("Login")}
                         style={[styles.button, styles.outlineBtn ]}>
                         <Text style={styles.outlineBtnText}>
@@ -55,11 +56,11 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#fff',
         fontFamily: "Poppins",
-        marginTop: -40
+        marginTop: -10
     },
     imageContainer: {
         flex: 1,
-        backgroundColor: "#000000",
+        backgroundColor: "#e7e7e7",
     },
     detail: {
         flex: 1,
@@ -70,8 +71,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: 45,
     },
     image: {
-        resizeMode: "cover",
-        width: '100%',
         height: '100%'
     },
     title: {
@@ -95,18 +94,16 @@ const styles = StyleSheet.create({
         textTransform: "uppercase",
         color: "#fff",
         textAlign: "center",
-        fontSize: 14,
         fontFamily: "PoppinsBold",
     },
     outlineBtnText: {
         textTransform: "uppercase",
         color: "#000000",
         textAlign: "center",
-        fontSize: 14,
         fontFamily: "PoppinsBold",
     },
     button: {
-        paddingVertical: 18,
+        paddingVertical: 15,
         borderRadius: 999,
         marginTop: 30,
     },
@@ -114,6 +111,6 @@ const styles = StyleSheet.create({
         backgroundColor: "#e7e7e7",
     },
     filledBtn: {
-        backgroundColor: "#000000"
+        backgroundColor: "tomato"
     }
 });

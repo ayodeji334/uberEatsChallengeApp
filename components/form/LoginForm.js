@@ -9,7 +9,7 @@ import firebase from '../../firebase/config';
 import { useDispatch } from 'react-redux';
 import { LOGIN_SUCCESS } from '../../redux/actionsType';
 
-export default function LoginForm() {
+export default function LoginForm({ navigation }) {
     const [modalVisibility, setModalVisibility] = useState(false);
     const [message, setMessage] = useState("");
     const [alertType, setAlertType] = useState("");
@@ -94,12 +94,12 @@ export default function LoginForm() {
                             error={props.errors.password}
                             touched={props.touched.password}
                         />
-                        {/* <Text 
+                        <Text 
                             style={styles.link} 
                             onPress={() => {navigation.navigate('ForgetPassword') }}
                         >
                             Forget Password
-                        </Text> */}
+                        </Text>
                         <TouchableOpacity
                             disabled={!props.isValid || props.isSubmitting}
                             activeOpacity={0.8}
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
         fontSize: 13,
     },
     button: {
-        backgroundColor: "#000000",
+        backgroundColor: "tomato",
         paddingVertical: 20,
         borderRadius: 50,
         width: "100%",

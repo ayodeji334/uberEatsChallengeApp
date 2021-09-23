@@ -3,13 +3,14 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { DrawerContent } from '../components/drawer/DrawerContent';
 
 //Stacks
 import HomeStack from './HomeStack';
 import ChatsStack from './ChatsStack';
 import OrderStack from './OrderStack';
 import ProfileStack from './ProfileStack';
-import { DrawerContent } from '../components/drawer/DrawerContent';
+
 
 //navigators
 const Tabs = createBottomTabNavigator();

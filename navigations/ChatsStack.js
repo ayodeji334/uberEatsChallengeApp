@@ -42,33 +42,7 @@ export default function ChatsStack({ navigation }) {
             />
             <Stack.Screen 
                 name="ChatRoomItem" 
-                component={ChatRoom} 
-                options={{
-                    headerStyle: {
-                        backgroundColor: "#fff",
-                        borderBottomWidth: 0,
-                        elevation: 0,
-                        shadowOpacity: 0,
-                    },
-                    headerTitleStyle: {
-                        color: 'black',
-                        fontFamily: 'PoppinsBold',
-                        marginTop: 21
-                    },
-                    title: 'Chat Screen',
-                    headerLeft: () => (
-                        <View style={{ marginLeft: 20, marginTop: 25}}>
-                            <Icon.Button 
-                                name="md-chevron-back-sharp" 
-                                size={25} 
-                                color="#000"
-                                backgroundColor="#d4d4d4" 
-                                style={{ borderRadius: 10, paddingRight: 0}}
-                                onPress={() => navigation.goBack()}
-                            />
-                        </View>
-                    )
-                }}  
+                component={ChatRoom}   
             />
         </Stack.Navigator>
     )

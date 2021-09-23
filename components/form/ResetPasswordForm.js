@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
         fontSize: 13,
     },
     button: {
-        backgroundColor: "#000000",
+        backgroundColor: "tomato",
         paddingVertical: 20,
         borderRadius: 50,
         width: "100%",
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
     },
     disabled: {
         opacity: .56,
-        backgroundColor: "#000",
+        backgroundColor: "tomato",
         paddingVertical: 17,
         borderRadius: 50,
         width: "100%",

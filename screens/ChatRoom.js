@@ -1,11 +1,42 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useLayoutEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, SafeAreaView, TouchableOpacity, TextInput } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-export default function ChatRoom({navigation}){
+export default function ChatRoom({navigation, ...props}){
+  const { name  } = props.route.params;
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
 
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerStyle: {
+        backgroundColor: "#fff",
+        borderBottomWidth: 0,
+        elevation: 0,
+        shadowOpacity: 0,
+      },
+      headerTitleStyle: {
+        color: 'black',
+        fontFamily: 'PoppinsBold',
+        marginTop: 28
+      },
+      title: name,
+      headerLeft: () => {
+        return (
+          <View style={{padding: 20, marginTop: 8, marginBottom: 10}}>
+            <TouchableOpacity style={{
+                padding: 8, 
+                marginTop: 8, 
+                backgroundColor: "#e7e7e7",
+                borderRadius: 9
+            }} activeOpacity={0.4} onPress={() => navigation.goBack()}>
+                <Ionicons name="md-chevron-back-sharp" size={21} color="#000" />
+            </TouchableOpacity>
+          </View>
+        )
+      }
+    })
+}, []);
 
   useEffect(() => {
     setMessages([
@@ -89,7 +120,8 @@ export default function ChatRoom({navigation}){
 
   return (
     <SafeAreaView style={{ backgroundColor: "#fff", flex: 1 }}>
-      <View style={{marginTop: 30, height: '100%'}}>
+      <View style={{marginTop: 30, height: '100%', borderTopColor: '#d8d8d8', borderTopWidth: 1}}>
+      <Text style={{ fontFamily: 'Poppins', color: '#000', paddingVertical: 10, textAlign: 'center'}}>Chat messages appear below</Text>
         <FlatList 
           data={messages}
           style={{paddingBottom: 40}}

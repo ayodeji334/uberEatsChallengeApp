@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
         fontFamily: "PoppinsBold",
     },
     title: {
-        fontSize: 27,
+        fontSize: 25,
         fontFamily: "PoppinsBold",
         letterSpacing: 1,
         textAlign: "center",
@@ -108,7 +108,6 @@ const styles = StyleSheet.create({
         paddingVertical: 14
     },
     description: {
-        fontSize: 15,
         fontFamily: "Poppins",
         letterSpacing: 1,
         paddingBottom: 40,
@@ -136,7 +135,7 @@ const styles = StyleSheet.create({
         fontSize: 13
     },
     button: {
-        backgroundColor: "#000",
+        backgroundColor: "tomato",
         paddingVertical: 18,
         borderRadius: 50,
         width: "100%",

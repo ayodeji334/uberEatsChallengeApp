@@ -55,6 +55,7 @@ export default function CheckOutModalContent ({ navigation, total, totalUSD, ite
                 addOrderToFireBase();
                 setOrderPlacedLoading(false);
               }}
+              activeOpacity={0.8}
             >
               <Text style={{ color: "white", fontWeight: '900', fontSize: 15, fontFamily: 'Poppins' }}>Checkout</Text>
               <Text
@@ -103,8 +104,10 @@ const styles = StyleSheet.create({
   subtotalContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginTop: 5,
-    paddingHorizontal: 20
+    paddingHorizontal: 20,
+    paddingVertical: 20,
+    borderTopWidth: 1,
+    borderTopColor: "#999",
   },
   subtotalText: {
     textAlign: "left",

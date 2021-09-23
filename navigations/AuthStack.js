@@ -16,11 +16,11 @@ export default function AuthStack(){
     };
 
     return(
-        <Stack.Navigator initialRouteName="Login">
+        <Stack.Navigator initialRouteName="Welcome">
             <Stack.Screen
                 name="Welcome"
                 component={Welcome}
-                options={screenOption}
+                options={{ headerShown: false }}
             />
 
             <Stack.Screen

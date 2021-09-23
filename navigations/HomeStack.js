@@ -41,7 +41,7 @@ export default function HomeStack({ navigation }) {
             <Stack.Screen
                 name="RestaurantDetail"
                 component={RestaurantDetail}
-                options={screenOption}
+                options={{ headerTitleStyle: {display: 'none'}, headerShown: true }}
             />
         </Stack.Navigator>
     )

@@ -5,6 +5,8 @@ import firebase from '../firebase/config';
 import { LOGIN_SUCCESS } from '../redux/actionsType';
 import AppStack from './AppStack';
 import AuthStack from './AuthStack';
+import HomeStack from './HomeStack';
+import ChatsStack from './ChatsStack';
 
 
 export default function RootNavigation (){
@@ -34,8 +36,10 @@ export default function RootNavigation (){
 
     return(
         <NavigationContainer>
+            <ChatsStack />
+            {/* <HomeStack /> */}
             {/* <AppStack /> */}
-            <AuthStack />
+            {/* <AuthStack /> */}
         </NavigationContainer>
     )
 };
