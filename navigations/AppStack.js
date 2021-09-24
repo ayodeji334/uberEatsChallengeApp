@@ -17,48 +17,59 @@ const Tabs = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
 
 //tabs screens
-const TabsContainer = () => {
-    const getTabBarVisibility = (route) => {
-        const routeName = route.state
-            ? route.state.routes[route.state.index].name
-            : '';
-
-        if (routeName === 'Chat') {
-            return false;
-        }
-        return true;
-    };
-
+const TabsContainer = ({ navigation, route}) => {
+  console.log(route, navigation)
     return (
-        <Tabs.Navigator screenOptions={({ route }) => ({
-            tabBarIcon: ({ focused, color, size }) => {
-              let iconName;
-              if (route.name === 'Home') {
-                iconName = focused ? 'home' : 'home';
-                return <Ionicons name={iconName} size={size} color={color} />;
-
-              } else if (route.name === 'Profile') {
-                iconName = focused ? 'user' : 'user';
-                return <FontAwesome5 name={iconName} size={size} color={color} />;
-
-              }else if(route.name === 'Chats'){
-                iconName = focused ? 'chatbox' : 'chatbox-outline';
-                return <Ionicons name={iconName} size={size} color={color} />;
-
-              }else{
-                iconName = focused ? 'receipt' : 'receipt-outline';
-                return <Ionicons name={iconName} size={size} color={color} />;
-
-              }
-            },
+          <Tabs.Navigator screenOptions={{
             tabBarActiveTintColor: 'tomato',
             tabBarInactiveTintColor: 'black',
             headerShown: false,
-          })}>
-            <Tabs.Screen name="Home" component={HomeStack} /> 
-            <Tabs.Screen name="Chats" component={ChatsStack}  options={{ tabBarBadge: 3}} />
-            <Tabs.Screen name="Orders" component={OrderStack} />
-            <Tabs.Screen name="Profile" component={ProfileStack} />
+          }}>
+            <Tabs.Screen 
+              name="Home" 
+              component={HomeStack} 
+              options={{
+                tabBarLabel: 'Home',
+                tabBarIcon: ({focused, color, size }) => (
+                  <Ionicons name={focused ? 'home' : 'home'} size={size} color={color} />
+                )
+              }}
+            /> 
+            <Tabs.Screen 
+              name="Chats" 
+              component={ChatsStack} 
+              options={{
+                tabBarLabel: 'Chats',
+                tabBarIcon: ({ focused, color, size }) => (
+                  <Ionicons name={focused ? 'chatbox' : 'chatbox-outline'} size={size} color={color} />
+                ),
+                tabBarBadge: 3,
+                tabBarStyle: {
+                  display: 'none'
+                }
+              }}
+            /> 
+            {/* <Tabs.Screen 
+              name="Profile" 
+              component={ProfileStack} 
+              options={{
+                tabBarLabel: 'Profile',
+                tabBarIcon: ({ focused, color, size }) => (
+                  <Ionicons name={focused ? 'user' : 'user'} size={size} color={color} />
+                ),
+                tabBarBadge: 3,
+              }}
+            />  */}
+            <Tabs.Screen 
+              name="Order" 
+              component={OrderStack} 
+              options={{
+                tabBarLabel: 'Order',
+                tabBarIcon: ({ focused, color, size }) => (
+                  <Ionicons name={focused ? 'receipt' : 'receipt-outline'} size={size} color={color} />
+                ),
+              }}
+            /> 
         </Tabs.Navigator>
     )
 }

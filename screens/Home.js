@@ -25,7 +25,6 @@ export default function Home({ navigation }) {
     return fetch(yelpUrl, apiOptions)
       .then((res) => res.json())
       .then((json) => {
-        console.log(json);
         setRestaurantData(
           json.businesses.filter((business) =>
             business.transactions.includes(activeTab.toLowerCase())

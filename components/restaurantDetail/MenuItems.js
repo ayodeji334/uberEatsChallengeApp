@@ -8,7 +8,7 @@ import FoodInfo from "./FoodInfo";
 
 export default function MenuItems({restaurantName, foods, hideCheckbox, marginLeft}) {
   const { selectedItems } = useSelector((state) => state.cart);
-  const selectedRestaurantItems = selectedItems.filter(item => item.restaurantName === restaurantName);
+  const restaurantSelectedItems = selectedItems.filter(item => item.restaurantName === restaurantName);
   const dispatch = useDispatch();
 
   const updateSelectedItemQuantityAndPrice = useCallback((quantity, item_id) => {
@@ -28,7 +28,6 @@ export default function MenuItems({restaurantName, foods, hideCheckbox, marginLe
   }, [])
 
   const addAndRemoveItemInCart = (item, checkboxValue) => {
-    console.log(checkboxValue)
     if(checkboxValue){
       dispatch({
         type: ADD_TO_CART,
@@ -64,7 +63,7 @@ export default function MenuItems({restaurantName, foods, hideCheckbox, marginLe
               <BouncyCheckbox
                 iconStyle={{ borderColor: "lightgray", borderRadius: 0 }}
                 fillColor="green"
-                isChecked={isFoodAlreadyInCart(food, selectedRestaurantItems)}
+                isChecked={isFoodAlreadyInCart(food, restaurantSelectedItems)}
                 onPress={(checkboxValue) => addAndRemoveItemInCart(food, checkboxValue)}
               />
             )}

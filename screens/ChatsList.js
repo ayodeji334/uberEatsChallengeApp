@@ -69,7 +69,7 @@ const messages = [
   },
 ];
 
-export default function ChatsList({navigation}){
+export default function ChatsList({navigation, ...props}){
     useLayoutEffect(() => {
       navigation.setOptions({
         headerStyle: {
@@ -78,9 +78,13 @@ export default function ChatsList({navigation}){
             elevation: 0,
             shadowOpacity: 0,
         },
+        tabBarStyle: {
+          display: 'none'
+        },
         headerTitleStyle: {
             display: "none"
         },
+        headerShown: true,
         title: 'Chat Screen',
         headerLeft: () => {
             return (

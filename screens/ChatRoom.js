@@ -15,15 +15,17 @@ export default function ChatRoom({navigation, ...props}){
         elevation: 0,
         shadowOpacity: 0,
       },
+      headerTitleAlign: 'center',
       headerTitleStyle: {
         color: 'black',
         fontFamily: 'PoppinsBold',
-        marginTop: 28
+        marginTop: 16,
+        textAlign: 'center'
       },
       title: name,
       headerLeft: () => {
         return (
-          <View style={{padding: 20, marginTop: 8, marginBottom: 10}}>
+          <View style={{padding: 20}}>
             <TouchableOpacity style={{
                 padding: 8, 
                 marginTop: 8, 
@@ -36,7 +38,7 @@ export default function ChatRoom({navigation, ...props}){
         )
       }
     })
-}, []);
+  }, []);
 
   useEffect(() => {
     setMessages([
@@ -125,7 +127,7 @@ export default function ChatRoom({navigation, ...props}){
         <FlatList 
           data={messages}
           style={{paddingBottom: 40}}
-          keyExtractor={item=>item._id}
+          keyExtractor={item=>item._id.toString()}
           renderItem={({item}) => (
               <View 
                 style={{

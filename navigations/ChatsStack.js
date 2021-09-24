@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useLayoutEffect } from 'react'
 import { View } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -8,6 +8,39 @@ import ChatRoom from '../screens/ChatRoom';
 const Stack = createStackNavigator();
 
 export default function ChatsStack({ navigation }) {
+    useLayoutEffect(() => {
+        navigation.setOptions({
+          headerStyle: {
+            backgroundColor: "#fff",
+            borderBottomWidth: 0,
+            elevation: 0,
+            shadowOpacity: 0,
+          },
+          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            color: 'black',
+            fontFamily: 'PoppinsBold',
+            marginTop: 16,
+            textAlign: 'center'
+          },
+          title: 'Messages',
+          headerLeft: () => {
+            return (
+              <View style={{padding: 20}}>
+                <TouchableOpacity style={{
+                    padding: 8, 
+                    marginTop: 8, 
+                    backgroundColor: "#e7e7e7",
+                    borderRadius: 9
+                }} activeOpacity={0.4} onPress={() => navigation.goBack()}>
+                    <Ionicons name="md-chevron-back-sharp" size={21} color="#000" />
+                </TouchableOpacity>
+              </View>
+            )
+          }
+        })
+    }, []);
+
     return (
         <Stack.Navigator initialRouteName='ChatsScreen'>
             <Stack.Screen 

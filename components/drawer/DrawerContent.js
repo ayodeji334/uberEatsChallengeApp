@@ -74,7 +74,7 @@ export function DrawerContent(props) {
                                 />
                             )}
                             label="Order"
-                            onPress={() => {props.navigation.navigate('OrdersScreen')}}
+                            onPress={() => {props.navigation.navigate('OrderList')}}
                         />
                     </View>
                     <View title="Preferences">
