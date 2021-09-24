@@ -36,8 +36,8 @@ export default function RootNavigation (){
 
     return(
         <NavigationContainer>
-            <ChatsStack />
-            {/* <HomeStack /> */}
+            {/* <ChatsStack /> */}
+            <HomeStack />
             {/* <AppStack /> */}
             {/* <AuthStack /> */}
         </NavigationContainer>

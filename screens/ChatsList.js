@@ -58,36 +58,44 @@ const messages = [
     messageTime: '2 days ago',
     messageText:
       'Hey there, this is my test for a post of my social app in React Native.',
-  }
+  },
+  {
+    id: '8',
+    userName: 'Juregen Kloop',
+    userImg: require('../assets/images/bg1.jpg'),
+    messageTime: '2 days ago',
+    messageText:
+      'Hey there, this is my test for a post of my social app in React Native.',
+  },
 ];
 
 export default function ChatsList({navigation}){
     useLayoutEffect(() => {
       navigation.setOptions({
-          headerStyle: {
-              backgroundColor: "#fff",
-              borderBottomWidth: 0,
-              elevation: 0,
-              shadowOpacity: 0,
-          },
-          headerTitleStyle: {
-              display: "none"
-          },
-          title: 'Chat Screen',
-          headerLeft: () => {
-              return (
-                  <View style={{padding: 20, marginTop: 8, marginBottom: 10}}>
-                      <TouchableOpacity style={{
-                          padding: 8, 
-                          marginTop: 8, 
-                          backgroundColor: "#e7e7e7",
-                          borderRadius: 9
-                      }} activeOpacity={0.4} onPress={() => navigation.goBack()}>
-                          <Ionicons name="md-chevron-back-sharp" size={21} color="#000" />
-                      </TouchableOpacity>
-                  </View>
-              )
-          }
+        headerStyle: {
+            backgroundColor: "#fff",
+            borderBottomWidth: 0,
+            elevation: 0,
+            shadowOpacity: 0,
+        },
+        headerTitleStyle: {
+            display: "none"
+        },
+        title: 'Chat Screen',
+        headerLeft: () => {
+            return (
+                <View style={{padding: 20, marginTop: 8, marginBottom: 10}}>
+                    <TouchableOpacity style={{
+                        padding: 8, 
+                        marginTop: 8, 
+                        backgroundColor: "#e7e7e7",
+                        borderRadius: 9
+                    }} activeOpacity={0.4} onPress={() => navigation.goBack()}>
+                        <Ionicons name="md-chevron-back-sharp" size={21} color="#000" />
+                    </TouchableOpacity>
+                </View>
+            )
+        }
       })
     }, []);
 
@@ -99,7 +107,15 @@ export default function ChatsList({navigation}){
                 keyExtractor={item=>item.id}
                 renderItem={({item}) => (
                     <TouchableOpacity 
-                        style={{paddingVertical: 24, paddingHorizontal: 20, backgroundColor: '#f4f4f4', marginVertical: 2}}
+                        style={{
+                          paddingVertical: 24, 
+                          paddingHorizontal: 20, 
+                          backgroundColor: '#fff', 
+                          borderWidth: 1, 
+                          borderColor: '#e7e7e7', 
+                          marginVertical: 1
+                        }}
+                        activeOpacity={0.9}
                         onPress={() => navigation.navigate('ChatRoomItem', {
                           name: item.userName
                         })}

@@ -9,13 +9,14 @@ export default function HeaderBtn({ text, activeTab, setActiveTab }) {
                 paddingHorizontal: 16,
                 borderRadius: 30,
             }}
+            activeOpacity={0.7}
             onPress={() => setActiveTab(text)}
         >
             <Text
                 style={{
                     color: activeTab === text ? "white" : "black",
-                    fontSize: 15,
-                    fontWeight: "900",
+                    fontSize: 14,
+                    fontFamily: 'PoppinsBold'
                 }}
             >
                 {text}

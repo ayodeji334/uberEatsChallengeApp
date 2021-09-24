@@ -1,46 +1,58 @@
-import { ADD_TO_CART, SELECTED_RESTAUTRANT } from "../actionsType";
+import { ADD_TO_CART, REMOVE_FROM_CART, SELECTED_RESTAUTRANT, UPDATE_ITEM_IN_CART } from "../actionsType";
 
-  const defaultState = {
-    selectedItems: { items: [], restaurantName: "" },
-    selectedRestaurant: {}
-  };
-  
-  const cartReducer = (state = defaultState, action) => {
-    switch (action.type) {
-      case ADD_TO_CART: {
-        let newState = { ...state };
-  
-        if (action.payload.checkboxValue) {
-          console.log("ADD TO CART");
-  
-          newState.selectedItems = {
-            items: [...newState.selectedItems.items, action.payload],
-            restaurantName: action.payload.restaurantName,
-          };
-        } else {
-          console.log("REMOVE FROM CART");
-          newState.selectedItems = {
-            items: [
-              ...newState.selectedItems.items.filter(
-                (item) => item.title !== action.payload.title
-              ),
-            ],
-            restaurantName: action.payload.restaurantName,
-          };
-        }
-        console.log(newState, "👉");
-        return newState;
-      }
+const initialState = {
+  selectedItems: [],
+  selectedRestaurant: {}
+};
 
-      case SELECTED_RESTAUTRANT: 
+const cartReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case ADD_TO_CART:{
+      if(action.payload.checkboxValue){
         return {
           ...state,
-          selectedRestaurant: action.payload
+          selectedItems: [...state.selectedItems, action.payload]
         }
-  
-      default:
+      }else {
         return state;
+      }
     }
-  };
-  
-  export default cartReducer;
+     
+
+    case REMOVE_FROM_CART:
+      return {
+        ...state,
+        selectedItems: [
+          ...state.selectedItems.filter(
+            (item) => item.id !== action.payload.id
+          ),
+        ]
+      };
+
+    case SELECTED_RESTAUTRANT:
+      return {
+        ...state,
+        selectedRestaurant: action.payload
+      }
+
+    // case UPDATE_ITEM_IN_CART: {
+    //   const restaurantSelectedItems = state.selectedItems.filter(item => item.restaurantName === action.payload.restaurantName);
+    //   const itemsToUpdate = restaurantSelectedItems.filter(item => item.id === action.payload.id);
+    //   const updatedItem = {
+    //     ...itemsToUpdate[0],
+    //     price: action.payload.price,
+    //     quantity: action.payload.quantity
+    //   };
+
+    //   return {
+    //     ...state,
+    //     selectedItems: [...state.selectedItems, updatedItem]
+    //   }
+    // }
+    
+    default:
+      return state;
+  }
+};
+
+export default cartReducer;

@@ -43,13 +43,47 @@ export default function About({navigation, ...props}) {
       <RestaurantImage image={image} />
       <RestaurantName name={name} />
       <RestaurantDescription description={description} />
+
+      <TouchableOpacity 
+        style={{
+          paddingVertical: 4, 
+          paddingHorizontal: 10,
+          marginVertical: 10,
+          marginHorizontal: 20, 
+          backgroundColor: "#000",
+          borderRadius: 9999,
+          width: 150,
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }} 
+        activeOpacity={0.4} 
+        onPress={() => navigation.goBack()}
+      >
+        <Text
+          style={{
+            fontWeight: '900',
+            fontFamily: 'Poppins',
+            marginTop: 10,
+            marginHorizontal: 15,
+            paddingBottom: 5,
+            color: 'white',
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}
+        >
+          Chat With Us
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 }
 
 
 const RestaurantImage = (props) => (
-  <Image source={{ uri: props.image }} style={{ width: "100%", height: 190 }} />
+  <Image source={{ uri: props.image }} style={{ width: "100%", height: 200 }} />
 );
 
 const RestaurantName = (props) => (

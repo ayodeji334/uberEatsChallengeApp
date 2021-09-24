@@ -42,7 +42,7 @@ export default function Categories() {
         paddingLeft: 20,
       }}
     >
-        <Text style={{ fontSize: 23, fontWeight: "bold", paddingTop: 10, paddingBottom: 20 }}>Categories</Text>
+        <Text style={{ fontSize: 23, fontFamily: 'PoppinsBold', paddingTop: 10, paddingBottom: 20 }}>Categories</Text>
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             {items.map((item, index) => (
               <View key={index} style={styles.categoriesContainer}>
@@ -54,7 +54,7 @@ export default function Categories() {
                     resizeMode: "contain",
                   }}
                 />
-                <Text style={{ paddingLeft: 10, fontSize: 16, fontWeight: "bold" }}>{item.text}</Text>
+                <Text style={{ paddingLeft: 10, fontSize: 16, fontFamily: 'PoppinsBold' }}>{item.text}</Text>
               </View>
             ))}
         </ScrollView>

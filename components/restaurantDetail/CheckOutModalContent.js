@@ -5,7 +5,7 @@ import firebase from "../../firebase/config";
 import { ScrollView } from 'react-native-gesture-handler';
 
 export default function CheckOutModalContent ({ navigation, total, totalUSD, items, restaurantName, setOrderPlacedLoading }){
-  
+  console.log('check out modal', items)
   const addOrderToFireBase = () => {
     setOrderPlacedLoading(true);
     const db = firebase.firestore();

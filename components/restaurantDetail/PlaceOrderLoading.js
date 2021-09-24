@@ -1,6 +1,7 @@
 import LottieView from "lottie-react-native";
 import React from 'react'
 import { View, Text } from 'react-native'
+
 export default function PlaceOrderLoading() {
     return (
         <View

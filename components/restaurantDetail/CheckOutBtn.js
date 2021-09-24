@@ -4,12 +4,12 @@ import { View, TouchableOpacity, Text } from 'react-native';
 export default function CheckOutBtn({ totalPrice, handleShowModal }) {
     return (
         <View
-            style={{
-                flex: 1,
-                alignItems: "center",
-                justifyContent: "center",
-                flexDirection: "row",
-            }}
+          style={{
+              flex: 1,
+              alignItems: "center",
+              justifyContent: "center",
+              flexDirection: "row",
+          }}
       >
         <View
           style={{

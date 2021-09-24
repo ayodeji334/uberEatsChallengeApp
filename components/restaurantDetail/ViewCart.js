@@ -8,11 +8,12 @@ import CheckOutModalContent from "./CheckOutModalContent";
 export default function ViewCart({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
   const [loading, setLoading] = useState(false);
-
-  const { items } = useSelector((state) => state.cart.selectedItems);
+  const { selectedItems } = useSelector((state) => state.cart);
   const { name } = useSelector(state => state.cart.selectedRestaurant);
 
-  const total = items.map((item) => Number(item.price.replace("$", ""))).reduce((prev, curr) => prev + curr, 0);
+  const restaurantSelectedItems = selectedItems.filter(item => item.restaurantName === name);
+  // console.log('view-cart', restaurantSelectedItems);
+  const total = restaurantSelectedItems.map((item) => Number(item.price.replace("$", ""))).reduce((prev, curr) => prev + curr, 0);
 
   const totalUSD = total.toLocaleString("en", {
     style: "currency",
@@ -31,7 +32,7 @@ export default function ViewCart({ navigation }) {
           total={total} 
           totalUSD={totalUSD}
           navigation={navigation}
-          items={items} 
+          items={selectedItems} 
           restaurantName={name} 
           setOrderPlacedLoading={(state) => setLoading(state)}
         />
@@ -44,7 +45,7 @@ export default function ViewCart({ navigation }) {
           justifyContent: "center",
           flexDirection: "row",
           position: "absolute",
-          bottom: 70,
+          bottom: 10,
           zIndex: 999,
           padding: 0,
           margin: 0,
