@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useLayoutEffect } from 'react';
-import { View, Text, StyleSheet, FlatList, SafeAreaView, TouchableOpacity, TextInput } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, SafeAreaView, TouchableOpacity, TextInput } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 export default function ChatRoom({navigation, ...props}){
@@ -19,7 +19,7 @@ export default function ChatRoom({navigation, ...props}){
       headerTitleStyle: {
         color: 'black',
         fontFamily: 'PoppinsBold',
-        marginTop: 16,
+        marginTop: 10,
         textAlign: 'center'
       },
       title: name,
@@ -28,7 +28,7 @@ export default function ChatRoom({navigation, ...props}){
           <View style={{padding: 20}}>
             <TouchableOpacity style={{
                 padding: 8, 
-                marginTop: 8, 
+                marginTop: 7, 
                 backgroundColor: "#e7e7e7",
                 borderRadius: 9
             }} activeOpacity={0.4} onPress={() => navigation.goBack()}>
@@ -112,6 +112,46 @@ export default function ChatRoom({navigation, ...props}){
           avatar: 'https://placeimg.com/140/140/any',
         },
       },
+      {
+        _id: 8,
+        text: 'Hello Odunayo',
+        createdAt: new Date(),
+        user: {
+          _id: 1,
+          name: 'React Expo',
+          avatar: 'https://placeimg.com/140/140/any',
+        },
+      },
+      {
+        _id: 9,
+        text: 'How are you doing?',
+        createdAt: new Date(),
+        user: {
+          _id: 1,
+          name: 'React Expo',
+          avatar: 'https://placeimg.com/140/140/any',
+        },
+      },
+      {
+        _id: 10,
+        text: 'Hello developer',
+        createdAt: new Date(2021, 7, 21, 10,21,23),
+        user: {
+          _id: 2,
+          name: 'React Native',
+          avatar: 'https://placeimg.com/140/140/any',
+        },
+      },
+      {
+        _id: 11,
+        text: "I'm fine and yourself?",
+        createdAt: new Date(2021, 7, 21, 10,21,23),
+        user: {
+          _id: 2,
+          name: 'React Native',
+          avatar: 'https://placeimg.com/140/140/any',
+        },
+      },
     ]);
   }, []);
 
@@ -121,17 +161,16 @@ export default function ChatRoom({navigation, ...props}){
   };
 
   return (
-    <SafeAreaView style={{ backgroundColor: "#fff", flex: 1 }}>
-      <View style={{marginTop: 30, height: '100%', borderTopColor: '#d8d8d8', borderTopWidth: 1}}>
-      <Text style={{ fontFamily: 'Poppins', color: '#000', paddingVertical: 10, textAlign: 'center'}}>Chat messages appear below</Text>
-        <FlatList 
-          data={messages}
-          style={{paddingBottom: 40}}
-          keyExtractor={item=>item._id.toString()}
-          renderItem={({item}) => (
+    <SafeAreaView style={{ backgroundColor: "#e7e7e7", flex: 1 }}>
+      <View style={{marginTop: 5, height: '100%'}}>
+        <ScrollView>
+          <Text style={{ fontFamily: 'Poppins', color: '#000', paddingVertical: 10, textAlign: 'center'}}>Chat messages appear below</Text>
+          {
+            messages.map((message) => (
               <View 
+              key={message._id}
                 style={{
-                  paddingVertical: 24, 
+                  paddingVertical: 9, 
                   paddingHorizontal: 20, 
                   marginVertical: 2,
                 }}
@@ -139,23 +178,30 @@ export default function ChatRoom({navigation, ...props}){
               >
                 <View 
                   style={{
-                    borderTopLeftRadius: 30,
+                    borderBottomLeftRadius: 30,
                     borderTopRightRadius: 30,
-                    borderBottomRightRadius: item.user.name === 'React Native' ? 1 : 30,
-                    borderBottomLeftRadius: item.user.name === 'React Native' ? 30 : 2,
-                    marginLeft: item.user.name === 'React Native' ? 60 : 2,
-                    marginRight: item.user.name === 'React Native' ? 1 : 60,
-                    paddingVertical: 20,
+                    borderBottomRightRadius: message.user.name === 'React Native' ? 1 : 30,
+                    borderTopLeftRadius: message.user.name === 'React Native' ? 30 : 2,
+                    marginLeft: message.user.name === 'React Native' ? 60 : 2,
+                    marginRight: message.user.name === 'React Native' ? 1 : 60,
+                    paddingVertical: 15,
                     paddingHorizontal: 20, 
-                    backgroundColor: item.user.name === 'React Native' ? '#e7e7e7' : 'blue'
+                    backgroundColor: message.user.name === 'React Native' ? 'white' : 'blue'
                   }}>
-                  <Text style={{ fontFamily: 'Poppins', color: item.user.name === 'React Native' ? 'black' : 'white' }}>{item.text}</Text> 
+                  <Text style={{ 
+                    fontFamily: 'Poppins',
+                    fontSize: 15, 
+                    color: message.user.name === 'React Native' ? 'black' : 'white' 
+                  }}>
+                    {message.text}
+                  </Text> 
                 </View>
               </View>
-          )}
-        />
+            ))
+          }
+        </ScrollView>
 
-        <View style={{bottom: 20}}>
+        <View>
           <View style={{
               width: '100%', 
               paddingHorizontal: 40,
@@ -167,9 +213,16 @@ export default function ChatRoom({navigation, ...props}){
                 justifyContent: 'center',
                 alignItems: 'center', 
               }}>
-                <View style={{ width: '90%'}}>
+                <View style={{ width: '100%'}}>
                   <TextInput
-                    style={{borderRadius: 40, marginRight: 20, borderWidth: 2, borderColor: 'black', padding: 15}}
+                    style={{
+                      borderRadius: 40, 
+                      marginRight: 20, 
+                      borderWidth: 2, 
+                      borderColor: 'gray', 
+                      paddingVertical: 10, 
+                      paddingHorizontal: 15
+                    }}
                     onChangeText={(e) => setNewMessage(e)}
                     value={newMessage}
                     blurOnSubmit={true}
