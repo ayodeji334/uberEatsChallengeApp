@@ -18,11 +18,11 @@ export default function Welcome({navigation}) {
         />
         <View style={styles.container}>
             <View style={styles.imageContainer}>
-                <ImageBackground source={require('../assets/images/bg2.jpg')} style={styles.image} />
+                <ImageBackground source={require('../assets/bg.png')} style={styles.image} />
             </View>
             <View style={styles.detail}>
                 <View style={{ flexDirection: 'column', justifyContent: 'center'}}>
-                    <Text style={styles.title}>Welcome to Instant <Text style={{color: 'green'}}>Meals</Text></Text>
+                    <Text style={styles.title}>The Fastest in Delivery <Text style={{color: 'green'}}>Food</Text></Text>
                     <Text style={styles.description}>
                         Order food and get your package where few minutes
                     </Text>
