@@ -53,19 +53,19 @@ const foods = [
 export default function RestaurantDetail({ route, navigation }) {
   return (
     <React.Fragment>
-      <StatusBar barStyle='light-content' />
+      <StatusBar barStyle='dark-content' backgroundColor="#fff" />
       <View style={{ flex: 1, height: '100%'}}>
         <About route={route} navigation={navigation} />
   
         <View style={{paddingTop: 10, flex: 1}}>
           <Text 
             style={{
-              fontSize: 20, 
+              fontSize: 20,
               fontFamily: 'PoppinsBold',
-              paddingVertical: 20, 
+              paddingVertical: 20,
               paddingLeft: 20, 
-              borderColor: '#a3a2a2', 
-              borderWidth: 1 
+              borderColor: '#a3a2a2',
+              borderWidth: 1
             }}
           >
             Menu List

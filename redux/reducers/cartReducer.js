@@ -35,20 +35,11 @@ const cartReducer = (state = initialState, action) => {
         selectedRestaurant: action.payload
       }
 
-    // case UPDATE_ITEM_IN_CART: {
-    //   const restaurantSelectedItems = state.selectedItems.filter(item => item.restaurantName === action.payload.restaurantName);
-    //   const itemsToUpdate = restaurantSelectedItems.filter(item => item.id === action.payload.id);
-    //   const updatedItem = {
-    //     ...itemsToUpdate[0],
-    //     price: action.payload.price,
-    //     quantity: action.payload.quantity
-    //   };
-
-    //   return {
-    //     ...state,
-    //     selectedItems: [...state.selectedItems, updatedItem]
-    //   }
-    // }
+    case UPDATE_ITEM_IN_CART: 
+      return {
+        ...state,
+        selectedItems: [ ...state.selectedItems, action.payload]
+      }
     
     default:
       return state;

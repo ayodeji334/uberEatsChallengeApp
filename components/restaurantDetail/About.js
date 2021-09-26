@@ -28,7 +28,7 @@ export default function About({navigation, ...props}) {
               padding: 8, 
               marginTop: 1, 
               backgroundColor: "#e7e7e7",
-              borderRadius: 9999
+              borderRadius: 9
             }} activeOpacity={0.4} onPress={() => navigation.goBack()}>
               <Ionicons name="md-chevron-back-sharp" size={21} color="#000" />
             </TouchableOpacity>
@@ -58,7 +58,7 @@ export default function About({navigation, ...props}) {
           justifyContent: 'center'
         }} 
         activeOpacity={0.4} 
-        onPress={() => navigation.goBack()}
+        onPress={() => navigation.navigate('ChatRoom', {name})}
       >
         <Text
           style={{

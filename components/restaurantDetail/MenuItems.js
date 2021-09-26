@@ -1,8 +1,8 @@
-import React, { useCallback, useState } from "react";
+import React from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { useDispatch, useSelector } from "react-redux";
-import { ADD_TO_CART, REMOVE_FROM_CART, UPDATE_ITEM_IN_CART } from "../../redux/actionsType";
+import { ADD_TO_CART, REMOVE_FROM_CART } from "../../redux/actionsType";
 import FoodImage from "./FoodImage";
 import FoodInfo from "./FoodInfo";
 
@@ -10,22 +10,6 @@ export default function MenuItems({restaurantName, foods, hideCheckbox, marginLe
   const { selectedItems } = useSelector((state) => state.cart);
   const restaurantSelectedItems = selectedItems.filter(item => item.restaurantName === restaurantName);
   const dispatch = useDispatch();
-
-  const updateSelectedItemQuantityAndPrice = useCallback((quantity, item_id) => {
-    const item = foods.filter(food =>  food.id === item_id);
-    const price = item[0].price.replace(/\D/g,'');
-    let itemNewPrice = ((price / 100) * quantity).toFixed(2);
-    
-    dispatch({
-      type: UPDATE_ITEM_IN_CART,
-      payload: {
-        ...item[0],
-        price: `$${itemNewPrice}`,
-        restaurantName,
-        quantity
-      }
-    })
-  }, [])
 
   const addAndRemoveItemInCart = (item, checkboxValue) => {
     if(checkboxValue){
@@ -67,7 +51,7 @@ export default function MenuItems({restaurantName, foods, hideCheckbox, marginLe
                 onPress={(checkboxValue) => addAndRemoveItemInCart(food, checkboxValue)}
               />
             )}
-            <FoodInfo food={food} isItemSelected={hideCheckbox} handleUpdateItemPrice={updateSelectedItemQuantityAndPrice} />
+            <FoodInfo food={food} isItemSelected={hideCheckbox} />
             <FoodImage food={food} marginLeft={marginLeft ? marginLeft : 0} />
           </View>
         </View>

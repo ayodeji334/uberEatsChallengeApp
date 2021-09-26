@@ -12,44 +12,6 @@ import { useFonts } from "expo-font";
 import { Ionicons } from '@expo/vector-icons';
 
 export default function OrderList({ navigation }) {
-    useLayoutEffect(() => {
-        navigation.setOptions({
-            headerStyle: {
-                backgroundColor: "#fff",
-                borderBottomWidth: 0,
-                elevation: 0,
-                shadowOpacity: 0,
-            },
-            headerTitleStyle: {
-                display: "none"
-            },
-            title: 'Order List',
-            headerLeft: () => {
-                return (
-                    <View style={{padding: 20, marginTop: 8, marginBottom: 10}}>
-                        <TouchableOpacity style={{
-                            padding: 8, 
-                            marginTop: 8, 
-                            backgroundColor: "#e7e7e7",
-                            borderRadius: 9
-                        }} activeOpacity={0.4} onPress={() => navigation.goBack()}>
-                            <Ionicons name="md-chevron-back-sharp" size={21} color="#000" />
-                        </TouchableOpacity>
-                    </View>
-                )
-            }
-        })
-    }, []);
-
-    const [loaded] = useFonts({
-        Poppins: require('../assets/fonts/Poppins-Medium.ttf'),
-        PoppinsBold: require('../assets/fonts/Poppins-Black.ttf')
-    });
-    
-    if (!loaded) {
-        return null;
-    }
-
     return (
         <SafeAreaView style={{ backgroundColor: '#fff', height: '100%'}}>
             <StatusBar
@@ -59,7 +21,7 @@ export default function OrderList({ navigation }) {
             <ScrollView>            
                 <View style={styles.container}>
                     <View style={styles.greetingInfo}>
-                        <Text style={styles.title}>Order List Screen</Text>
+                        <Text style={styles.title}>You don't have order yet.</Text>
                     </View>
                 </View>
             </ScrollView>  
@@ -71,9 +33,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        fontFamily: "Poppins",
-        paddingTop: 10,
-        paddingBottom: 130
     },
     label: {
         fontSize: 13,

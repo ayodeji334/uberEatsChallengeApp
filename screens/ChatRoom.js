@@ -11,9 +11,9 @@ export default function ChatRoom({navigation, ...props}){
     navigation.setOptions({
       headerStyle: {
         backgroundColor: "#fff",
-        borderBottomWidth: 0,
-        elevation: 0,
-        shadowOpacity: 0,
+        borderBottomWidth: 1,
+        elevation: 1,
+        shadowOpacity: 1,
       },
       headerTitleAlign: 'center',
       headerTitleStyle: {
@@ -28,7 +28,7 @@ export default function ChatRoom({navigation, ...props}){
           <View style={{padding: 20}}>
             <TouchableOpacity style={{
                 padding: 8, 
-                marginTop: 7, 
+                marginTop: 0, 
                 backgroundColor: "#e7e7e7",
                 borderRadius: 9
             }} activeOpacity={0.4} onPress={() => navigation.goBack()}>
@@ -161,7 +161,7 @@ export default function ChatRoom({navigation, ...props}){
   };
 
   return (
-    <SafeAreaView style={{ backgroundColor: "#e7e7e7", flex: 1 }}>
+    <SafeAreaView style={{ backgroundColor: "#fff", flex: 1 }}>
       <View style={{marginTop: 5, height: '100%'}}>
         <ScrollView>
           <Text style={{ fontFamily: 'Poppins', color: '#000', paddingVertical: 10, textAlign: 'center'}}>Chat messages appear below</Text>
@@ -186,7 +186,7 @@ export default function ChatRoom({navigation, ...props}){
                     marginRight: message.user.name === 'React Native' ? 1 : 60,
                     paddingVertical: 15,
                     paddingHorizontal: 20, 
-                    backgroundColor: message.user.name === 'React Native' ? 'white' : 'blue'
+                    backgroundColor: message.user.name === 'React Native' ? '#e7e7e7' : '#000'
                   }}>
                   <Text style={{ 
                     fontFamily: 'Poppins',
