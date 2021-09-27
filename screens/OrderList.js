@@ -1,28 +1,34 @@
-import React, { useLayoutEffect } from 'react';
+import React from 'react';
 import { 
     StyleSheet, 
     Text, 
     View,  
-    TouchableOpacity, 
     ScrollView,
     StatusBar,
     SafeAreaView
 } from 'react-native';
-import { useFonts } from "expo-font";
-import { Ionicons } from '@expo/vector-icons';
+import OrderItem from '../components/order/OrderItem';
 
-export default function OrderList({ navigation }) {
+export default function OrderList() {
+    const arr = [1, 2, 3, 4, 5, 6, 7]
     return (
         <SafeAreaView style={{ backgroundColor: '#fff', height: '100%'}}>
             <StatusBar
                 barStyle="dark-content"
                 backgroundColor="#fff"
             />
-            <ScrollView>            
+            <ScrollView style={{ paddingTop: StatusBar.currentHeight}}>            
                 <View style={styles.container}>
-                    <View style={styles.greetingInfo}>
+                    {/* <View style={styles.greetingInfo}>
                         <Text style={styles.title}>You don't have order yet.</Text>
-                    </View>
+                    </View> */}
+
+                    {
+                        arr.map(item => (
+                            <OrderItem key={item} />
+                        ))
+                    }
+                    
                 </View>
             </ScrollView>  
         </SafeAreaView>

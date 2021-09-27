@@ -1,19 +1,25 @@
-import React from "react";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { Image, TouchableOpacity } from "react-native";
+import React, { useState } from "react";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
+import { Image, TouchableOpacity, View } from "react-native";
 
 export default function RestaurantImage(props){
-   return (
-        <React.Fragment>
+    const [isLiked, setIsLiked] = useState(false);
+
+    const toggleLiked = () => {
+        setIsLiked(!isLiked);
+    }
+
+    return (
+        <View style={{ position: 'relative'}}>
             <Image
                 source={{
                     uri: props.image,
                 }}
-                style={{ width: "100%", height: 180, borderRadius: 20 }}
+                style={{ width: "100%", height: 230, borderRadius: 20 }}
             />
-            <TouchableOpacity style={{ right: 40, top: 20, marginRight: 20 }}>
-                <MaterialCommunityIcons name="heart-outline" size={25} color="red" />
+            <TouchableOpacity onPress={toggleLiked} style={{ right: 10, top: 20, marginRight: 10, position: 'absolute' }}>
+                <FontAwesome name="heart" size={25} color={isLiked ? "red" : "white"} />
             </TouchableOpacity>
-        </React.Fragment>
-   )
+        </View>
+    )
 }

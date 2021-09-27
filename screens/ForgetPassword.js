@@ -103,7 +103,7 @@ export default function ForgetPassword({navigation}) {
                 <View style={styles.greetingInfo}>
                     <Text style={styles.title}>Password Recovery</Text>
                     <Text style={styles.description}>
-                        Fill in your email in the box below to recovery your password.
+                        Enter the email associated with your account to recovery your password.
                     </Text>
                 </View>
                 <View style={styles.formContainer}>

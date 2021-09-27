@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text } from 'react-native';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 export default function RestaurantInfo(props){
     return (
@@ -12,20 +13,18 @@ export default function RestaurantInfo(props){
             }}
         >
             <View>
-                <Text style={{ fontSize: 15, fontWeight: "900", fontFamily: 'PoppinsBold' }}>{props.name}</Text>
-                <Text style={{ fontSize: 13, color: "gray", fontFamily: 'Poppins' }}>30-45 • min</Text>
+                <Text style={{ fontSize: 16, fontWeight: "900", fontFamily: 'PoppinsBold' }}>{props.name}</Text>
+                <Text style={{ fontSize: 14, color: "gray", fontFamily: 'Poppins' }}>30-45 • min</Text>
             </View>
             <View
                 style={{
-                    backgroundColor: "#eee",
-                    height: 30,
-                    width: 30,
-                    alignItems: "center",
+                    flexDirection: 'row',
                     justifyContent: "center",
-                    borderRadius: 15,
+                    alignItems: 'center'
                 }}
             >
-                <Text style={{ fontSize: 15, fontWeight: '900'}}>{props.rating}</Text>
+                <FontAwesome name="star" color="gold" style={{ paddingRight: 5}} size={16} />
+                <Text style={{ fontSize: 16, fontFamily: 'PoppinsBold'}}>{props.rating}</Text>
             </View>
         </View>
     )

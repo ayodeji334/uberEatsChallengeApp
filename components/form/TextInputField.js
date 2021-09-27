@@ -33,7 +33,8 @@ const styles = StyleSheet.create({
         marginTop: 1,
         marginBottom: 10,
         fontFamily: "Poppins",
-        fontSize: 13
+        fontSize: 13,
+        width: '100%'
     },
     label: {
         fontSize: 13,

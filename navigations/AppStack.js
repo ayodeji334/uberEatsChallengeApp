@@ -10,11 +10,14 @@ import { createStackNavigator } from '@react-navigation/stack';
 import ChatRoom from '../screens/ChatRoom';
 import RestaurantDetail from '../screens/RestaurantDetail';
 import Profile from '../screens/Profile';
+import EditProfile from '../screens/EditProfile';
+import Help from '../screens/Help';
+import ChangePassword from '../screens/ChangePassword';
 
 const Stack = createStackNavigator();
 const Tabs = createBottomTabNavigator();
 
-export default function AppStack({ navigation, route}){
+export default function AppStack(){
   const TabStack  = () => {
     return (
       <Tabs.Navigator screenOptions={{
@@ -52,7 +55,7 @@ export default function AppStack({ navigation, route}){
           }}
         />
         <Tabs.Screen 
-          name="Order" 
+          name="Orders" 
           component={OrderList} 
           options={{
             tabBarLabel: 'Orders',
@@ -89,7 +92,9 @@ export default function AppStack({ navigation, route}){
           headerShown: true 
         }}
       />
-      <Stack.Screen name="Profile" component={Profile} />
+      <Stack.Screen name="Edit-Profile" component={EditProfile} />
+      <Stack.Screen name="Change-Password" component={ChangePassword} />
+      <Stack.Screen name="Help" component={Help} />
     </Stack.Navigator>
   )
 }
