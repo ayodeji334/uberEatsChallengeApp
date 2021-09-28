@@ -1,27 +1,103 @@
-import React from 'react';
-import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Alert, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import OrderItem from "./OrderItem";
-import firebase from "../../firebase/config";
+// import firebase from "../../firebase/config";
 import { ScrollView } from 'react-native-gesture-handler';
+import PaymentScreen from '../payment/PaymentScreeen';
+import { useStripe } from '@stripe/stripe-react-native';
 
 export default function CheckOutModalContent ({ navigation, total, totalUSD, items, restaurantName, setOrderPlacedLoading }){
-  console.log('check out modal', items)
-  const addOrderToFireBase = () => {
-    setOrderPlacedLoading(true);
-    const db = firebase.firestore();
-    db.collection("orders")
-      .add({
-        items: items,
-        restaurantName: restaurantName,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-      })
-      .then(() => {
-        setTimeout(() => {
-          setOrderPlacedLoading(false);
-          navigation.navigate("OrderCompleted");
-        }, 2000);
-      });
+  const { initPaymentSheet, presentPaymentSheet } = useStripe();
+  const [paymentSheetEnabled, setPaymentSheetEnabled] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [clientSecret, setClientSecret] = useState('client"31212@');
+
+  const fetchPaymentSheetParams = async () => {
+    const response = await fetch(`https://expo-stripe-server-example.glitch.me/payment-sheet`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data: {
+        total
+      }
+    });
+
+    const { paymentIntent, ephemeralKey, customer } = await response.json();
+    
+    setClientSecret(paymentIntent);
+    
+    return {
+      paymentIntent,
+      ephemeralKey,
+      customer,
+    };
   };
+
+  const initialisePaymentSheet = async () => {
+      const {
+          paymentIntent,
+          ephemeralKey,
+          customer,
+      } = await fetchPaymentSheetParams();
+
+      const { error } = await initPaymentSheet({
+        customerId: customer,
+        customerEphemeralKeySecret: ephemeralKey,
+        paymentIntentClientSecret: paymentIntent,
+        customFlow: false,
+        merchantDisplayName: 'Uber-Eats-Clone',
+        style: 'automatic',
+      });
+
+      if (!error) {
+        setPaymentSheetEnabled(true);
+      }
+  };
+
+  const openPaymentSheet = async () => {
+      if (!clientSecret) {
+        return;
+      }
+
+      setLoading(true);
+
+      const { error } = await presentPaymentSheet({
+        clientSecret,
+      });
+  
+      if (error) {
+        Alert.alert(`Error code: ${error.code}`, error.message);
+      } else {
+        Alert.alert('Success', 'The payment was confirmed successfully');
+      }
+
+      setPaymentSheetEnabled(false);
+      setLoading(false);
+  };
+  
+  useEffect(() => {
+      // In your app’s checkout, make a network request to the backend and initialize PaymentSheet.
+      // To reduce loading time, make this request before the Checkout button is tapped, e.g. when the screen is loaded.
+      initialisePaymentSheet();
+  }, []);
+
+  // const addOrderToFireBase = () => {
+  //   setOrderPlacedLoading(true);
+  //   const db = firebase.firestore();
+  //   db.collection("orders")
+  //     .add({
+  //       items: items,
+  //       restaurantName: restaurantName,
+  //       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+  //     })
+  //     .then(() => {
+  //       setTimeout(() => {
+  //         setOrderPlacedLoading(false);
+  //         navigation.navigate("OrderCompleted");
+  //       }, 2000);
+  //     });
+  // };
 
   return (
     <React.Fragment>
@@ -38,41 +114,42 @@ export default function CheckOutModalContent ({ navigation, total, totalUSD, ite
             <Text style={styles.subtotalText}>Subtotal</Text>
             <Text style={styles.subtotalText}>${totalUSD}</Text>
           </View>
-          <View style={{ flexDirection: "row", justifyContent: "center", paddingvertical: 10 }}>
-            <TouchableOpacity
-              style={{
-                marginTop: 10,
-                backgroundColor: "black",
-                flexDirection: "row",
-                justifyContent: "space-between",
-                paddingVertical: 18,
-                paddingHorizontal: 20,
-                borderRadius: 30,
-                width: 250,
-                position: "relative",
-              }}
-              onPress={() => {
-                addOrderToFireBase();
-                setOrderPlacedLoading(false);
-              }}
-              activeOpacity={0.8}
-            >
-              <Text style={{ color: "white", fontWeight: '900', fontSize: 15, fontFamily: 'Poppins' }}>Checkout</Text>
-              <Text
+
+          <PaymentScreen>
+            <View style={{ flexDirection: "row", justifyContent: "center", paddingvertical: 10 }}>
+              <TouchableOpacity
                 style={{
-                  position: "absolute",
-                  right: 20,
-                  color: "white",
-                  fontSize: 15,
-                  fontWeight: '900',
-                  fontFamily: 'Poppins',
-                  top: 17,
+                  marginTop: 10,
+                  backgroundColor: "black",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  paddingVertical: 18,
+                  paddingHorizontal: 20,
+                  borderRadius: 30,
+                  width: 250,
+                  position: "relative",
                 }}
+                onPress={openPaymentSheet}
+                activeOpacity={0.8}
+                disabled={!paymentSheetEnabled && loading}
               >
-                ${total & totalUSD}
-              </Text>
-            </TouchableOpacity>
-          </View>
+                <Text style={{ color: "white", fontWeight: '900', fontSize: 15, fontFamily: 'Poppins' }}>Checkout</Text>
+                <Text
+                  style={{
+                    position: "absolute",
+                    right: 20,
+                    color: "white",
+                    fontSize: 15,
+                    fontWeight: '900',
+                    fontFamily: 'Poppins',
+                    top: 17,
+                  }}
+                >
+                  ${total & totalUSD}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </PaymentScreen>
         </View>
       </View>
     </React.Fragment>

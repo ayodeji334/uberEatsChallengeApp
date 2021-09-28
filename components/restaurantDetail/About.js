@@ -1,7 +1,6 @@
 import React, { useLayoutEffect } from "react";
-import { View, Text, Image, TouchableOpacity, StatusBar} from "react-native";
-import { Ionicons } from '@expo/vector-icons';
-import {  } from "expo-status-bar";
+import { View, Text, Image, TouchableOpacity } from "react-native";
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 
 export default function About({navigation, ...props}) {
   const { name, image, price, reviews, rating, categories } = props.route.params;
@@ -25,12 +24,13 @@ export default function About({navigation, ...props}) {
         return (
           <View style={{padding: 20, marginTop: 8, marginBottom: 10}}>
             <TouchableOpacity style={{
-              padding: 8, 
+              paddingVertical: 7, 
+              paddingHorizontal: 13,
               marginTop: 1, 
               backgroundColor: "#e7e7e7",
               borderRadius: 9
             }} activeOpacity={0.4} onPress={() => navigation.goBack()}>
-              <Ionicons name="md-chevron-back-sharp" size={21} color="#000" />
+              <FontAwesome5 name="angle-left" size={21} color="#000" />
             </TouchableOpacity>
           </View>
         )

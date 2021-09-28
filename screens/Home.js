@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { View, SafeAreaView, ScrollView } from "react-native";
+import { View, SafeAreaView, ScrollView, StatusBar } from "react-native";
 import Categories from "../components/home/Categories";
-import HeaderTabs from "../components/home/HeaderTabs";
+// import HeaderTabs from "../components/home/HeaderTabs";
 import RestaurantItems, { localRestaurants } from "../components/home/RestaurantItems";
-import SearchBar from "../components/home/SearchBar";
+// import SearchBar from "../components/home/SearchBar";
 
 const YELP_API_KEY = 
 "gkckb2H79jY1L4QM7QmZw2meFFQq3BqIEUN5WZC0JiwxO8beHXNe26vc4oYoP-DSQRZYqwapbZ_3ax3NdkqjL2BT_HOfoS_2T0Lu2_om-kGoeiKyqffm9Mar_rBJYXYx";
@@ -39,10 +39,11 @@ export default function Home({ navigation }) {
 
   return (
     <SafeAreaView style={{ backgroundColor: "#fff", flex: 1 }}>
-      <View style={{ backgroundColor: "white", padding: 15 }}>
+      {/* <View style={{ backgroundColor: "white", padding: 15 }}>
         <HeaderTabs activeTab={activeTab} setActiveTab={setActiveTab} />
         <SearchBar cityHandler={setCity} />
-      </View>
+      </View> */}
+      <StatusBar backgroundColor='#fff' barStyle="dark-content"  />
       <ScrollView showsVerticalScrollIndicator={false}>
         <Categories />
         <RestaurantItems
@@ -50,8 +51,6 @@ export default function Home({ navigation }) {
           navigation={navigation}
         />
       </ScrollView>
-      {/* <Divider width={1} /> */}
-      {/* <BottomTabs /> */}
     </SafeAreaView>
   );
 }

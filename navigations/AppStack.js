@@ -13,6 +13,7 @@ import Profile from '../screens/Profile';
 import EditProfile from '../screens/EditProfile';
 import Help from '../screens/Help';
 import ChangePassword from '../screens/ChangePassword';
+import MakePayment from '../screens/MakePayment';
 
 const Stack = createStackNavigator();
 const Tabs = createBottomTabNavigator();
@@ -84,7 +85,7 @@ export default function AppStack(){
     <Stack.Navigator>
       <Stack.Screen name='Root' component={TabStack} options={{ headerShown: false}} />
       <Stack.Screen name="ChatRoom" component={ChatRoom} />
-      <Stack.Screen 
+      <Stack.Screen
         name="RestaurantDetail"
         component={RestaurantDetail} 
         options={{ 
@@ -95,6 +96,7 @@ export default function AppStack(){
       <Stack.Screen name="Edit-Profile" component={EditProfile} />
       <Stack.Screen name="Change-Password" component={ChangePassword} />
       <Stack.Screen name="Help" component={Help} />
+      <Stack.Screen name="Make-Payment" component={MakePayment} />
     </Stack.Navigator>
   )
 }

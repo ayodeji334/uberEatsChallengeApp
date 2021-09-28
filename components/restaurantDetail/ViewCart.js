@@ -20,6 +20,11 @@ export default function ViewCart({ navigation }) {
     currency: "USD",
   });
 
+  const handleReadyToPay = () => {
+    setModalVisible(false);
+    setTimeout(() =>  navigation.navigate('Make-Payment'), 1000)
+  }
+
   return (
     <React.Fragment>
       <Modal
@@ -34,7 +39,7 @@ export default function ViewCart({ navigation }) {
           navigation={navigation}
           items={selectedItems} 
           restaurantName={name} 
-          setOrderPlacedLoading={(state) => setLoading(state)}
+          setOrderPlacedLoading={handleReadyToPay}
         />
       </Modal>
 
@@ -45,7 +50,7 @@ export default function ViewCart({ navigation }) {
           justifyContent: "center",
           flexDirection: "row",
           position: "absolute",
-          bottom: 10,
+          bottom: 20,
           zIndex: 999,
           padding: 0,
           margin: 0,
