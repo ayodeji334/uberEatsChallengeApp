@@ -7,8 +7,15 @@ import firebase from '../firebase/config';
 import * as Yup from 'yup'
 import { Formik } from 'formik';
 import EmailInputField from '../components/form/EmailInputField';
+import AlertModalBox from '../components/general/AlertModalBox';
 
 export default function ForgetPassword({navigation}) {
+    const [modalVisibility, setModalVisibility] = useState(false);
+    const [message, setMessage] = useState("");
+    const [alertType, setAlertType] = useState("");
+    const handleCloseModal = () => setModalVisibility(false);
+
+
     const initialValues = { 
         email: ''
     };
@@ -21,24 +28,19 @@ export default function ForgetPassword({navigation}) {
     });
     
     const handleRetrieveUserPassword = async (values, actions) => {
-        firebase.auth().signInWithEmailAndPassword(values.email, values.password).then(({user}) => {
+        console.log(values)
+        firebase.auth().sendPasswordResetEmail(values.email).then(({user}) => {
             actions.setSubmitting(false);
             actions.resetForm({
                 values: initialValues
             });
-            
-            dispatch({
-                type: LOGIN_SUCCESS,
-                payload: {
-                    email: user.email,
-                    displayName:  user.displayName,
-                    uid: user.uid,
-                    isEmailVerified: user.emailVerified,
-                    photoUrl: user.photoURL
-                }
-            });
+
+            setMessage('Please check your mail, a link was sent to you to reset your password');
+            setAlertType("error");
+            setModalVisibility(true);
         }).catch(err => {
             actions.setSubmitting(false);
+            console.log(err)
 
             if(err.code === 'auth/user-not-found'){
                 setMessage("The crendential does not match any record");
@@ -82,15 +84,6 @@ export default function ForgetPassword({navigation}) {
             }
         })
     }, []);
-
-    const [loaded] = useFonts({
-        Poppins: require('../assets/fonts/Poppins-Medium.ttf'),
-        PoppinsBold: require('../assets/fonts/Poppins-Black.ttf')
-    });
-    
-    if (!loaded) {
-        return null;
-    }
     
 
     return (
@@ -133,6 +126,12 @@ export default function ForgetPassword({navigation}) {
                         )}
                     </Formik>
                 </View>
+                <AlertModalBox 
+                    type={alertType} 
+                    isModalVisible={modalVisibility} 
+                    message={message} 
+                    closeModalhandler={handleCloseModal} 
+                />
             </View>
         </SafeAreaView>
     );

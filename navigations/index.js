@@ -34,8 +34,8 @@ export default function RootNavigation (){
 
     return(
         <NavigationContainer>
-            <AppStack />
-            {/* <AuthStack /> */}
+            {/* <AppStack /> */}
+            <AuthStack />
         </NavigationContainer>
     )
 };

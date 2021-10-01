@@ -8,6 +8,7 @@ import AlertModalBox from '../general/AlertModalBox';
 import firebase from '../../firebase/config';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
+import { LOGIN_SUCCESS } from '../../redux/actionsType';
 
 
 export default function RegisterForm() {
@@ -45,6 +46,10 @@ export default function RegisterForm() {
             actions.resetForm({
                 values: initialValues
             });
+
+            setMessage('Your account has been created successfully');
+            setAlertType("success");
+            setModalVisibility(true);
 
             dispatch({
                 type: LOGIN_SUCCESS,
@@ -148,7 +153,7 @@ const styles = StyleSheet.create({
         fontSize: 13,
     },
     button: {
-        backgroundColor: "tomato",
+        backgroundColor: "#000",
         paddingVertical: 18,
         borderRadius: 50,
         width: "100%",

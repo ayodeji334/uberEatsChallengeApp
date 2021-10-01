@@ -41,15 +41,6 @@ export default function Register({ navigation }) {
         })
     }, []);
 
-    const [loaded] = useFonts({
-        Poppins: require('../assets/fonts/Poppins-Medium.ttf'),
-        PoppinsBold: require('../assets/fonts/Poppins-Black.ttf')
-    });
-    
-    if (!loaded) {
-        return null;
-    }
-
     return (
         <SafeAreaView style={{ backgroundColor: '#fff', height: '100%'}}>
             <StatusBar
@@ -135,7 +126,7 @@ const styles = StyleSheet.create({
         fontSize: 13
     },
     button: {
-        backgroundColor: "tomato",
+        backgroundColor: "#000",
         paddingVertical: 18,
         borderRadius: 50,
         width: "100%",
