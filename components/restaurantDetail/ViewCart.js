@@ -12,7 +12,6 @@ export default function ViewCart({ navigation }) {
   const { name } = useSelector(state => state.cart.selectedRestaurant);
 
   const restaurantSelectedItems = selectedItems.filter(item => item.restaurantName === name);
-  // console.log('view-cart', restaurantSelectedItems);
   const total = restaurantSelectedItems.map((item) => Number(item.price.replace("$", ""))).reduce((prev, curr) => prev + curr, 0);
 
   const totalUSD = total.toLocaleString("en", {
@@ -53,7 +52,7 @@ export default function ViewCart({ navigation }) {
           bottom: 20,
           zIndex: 999,
           padding: 0,
-          margin: 0,
+          marginBottom: 90,
         }}
       >
         {total ? (

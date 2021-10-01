@@ -1,5 +1,5 @@
-import React from "react";
-import { View, Text, Image, ScrollView, StyleSheet } from "react-native";
+import React, { useState } from "react";
+import { View, Text, Image, ScrollView, StyleSheet, TouchableOpacity } from "react-native";
 
 const items = [
   {
@@ -32,7 +32,14 @@ const items = [
   },
 ];
 
-export default function Categories() {
+export default function Categories({ handleSelectCategory }) {
+  const [activeCategory, setActiveCategory] = useState('Pick-up');
+
+  const handleOnPress = (text) => {
+    setActiveCategory(text);
+    handleSelectCategory(text);
+  }
+
   return (
     <View
       style={{
@@ -44,19 +51,30 @@ export default function Categories() {
     >
         <Text style={{ fontSize: 23, fontFamily: 'PoppinsBold', paddingTop: 10, paddingBottom: 20 }}>Categories</Text>
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            {items.map((item, index) => (
-              <View key={index} style={styles.categoriesContainer}>
-                <Image
-                  source={item.image}
-                  style={{
-                    width: 50,
-                    height: 40,
-                    resizeMode: "contain",
-                  }}
-                />
-                <Text style={{ paddingLeft: 10, fontSize: 16, fontFamily: 'PoppinsBold' }}>{item.text}</Text>
-              </View>
-            ))}
+          {items.map((item, index) => (
+            <TouchableOpacity 
+              key={index} 
+              activeOpacity={.8}
+              onPress={() => handleOnPress(item.text)}
+              style={[styles.categoriesContainer, {
+                backgroundColor: activeCategory === item.text ? "red" : "white"
+              }]}>
+              <Image
+                source={item.image}
+                style={{
+                  width: 50,
+                  height: 40,
+                  resizeMode: "contain",
+                }}
+              />
+              <Text style={{ 
+                paddingLeft: 10, 
+                fontSize: 16, 
+                fontFamily: 'PoppinsBold',
+                color: activeCategory === item.text ? "white" : "black",
+              }}>{item.text}</Text>
+            </TouchableOpacity>
+          ))}
         </ScrollView>
     </View>
   );
@@ -66,6 +84,8 @@ const styles = StyleSheet.create({
   categoriesContainer: { 
     flexDirection: 'row', 
     paddingVertical: 10, 
+    paddingHorizontal: 15,
+    borderRadius: 30,
     alignItems: "center", 
     justifyContent: 'center',
     marginRight: 30 

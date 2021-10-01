@@ -39,7 +39,7 @@ export default function About({navigation, ...props}) {
   }, []);
 
   return (
-    <View>
+    <View style={{ paddingBottom: 10}}>
       <RestaurantImage image={image} />
       <RestaurantName name={name} />
       <RestaurantDescription description={description} />

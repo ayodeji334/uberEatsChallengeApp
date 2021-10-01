@@ -57,19 +57,7 @@ export default function RestaurantDetail({ route, navigation }) {
       <View style={{ flex: 1, height: '100%'}}>
         <About route={route} navigation={navigation} />
   
-        <View style={{paddingTop: 10, flex: 1}}>
-          <Text 
-            style={{
-              fontSize: 20,
-              fontFamily: 'PoppinsBold',
-              paddingVertical: 20,
-              paddingLeft: 20, 
-              borderColor: '#a3a2a2',
-              borderWidth: 1
-            }}
-          >
-            Menu List
-          </Text>
+        <View style={{flex: 1, borderTopColor: '#a3a2a2', borderTopWidth: 1}}>
           <MenuItems restaurantName={route.params.name} foods={foods} />
         </View>
         <ViewCart navigation={navigation} />

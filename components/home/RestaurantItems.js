@@ -44,7 +44,7 @@ export default function RestaurantItems({ navigation, restaurantData }) {
         <TouchableOpacity
           key={index}
           activeOpacity={0.4}
-          style={{ marginBottom: 30, borderRadius: 20 }}
+          style={{ marginBottom: 10, borderRadius: 20 }}
           onPress={() => {
             dispatch({
               type: SELECTED_RESTAUTRANT,
@@ -69,7 +69,7 @@ export default function RestaurantItems({ navigation, restaurantData }) {
           }}
         >
           <View
-            style={{ marginTop: 10, paddingHorizontal: 25, paddingVertical: 20, backgroundColor: "white" }}
+            style={{ marginTop: 5, paddingHorizontal: 25, paddingVertical: 20, backgroundColor: "white" }}
           >
             <RestaurantImage image={restaurant.image_url} />
             <RestaurantInfo name={restaurant.name} rating={restaurant.rating} />

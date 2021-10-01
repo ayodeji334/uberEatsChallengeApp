@@ -3,41 +3,32 @@ import { View, TouchableOpacity, Text } from 'react-native';
 
 export default function CheckOutBtn({ totalPrice, handleShowModal }) {
     return (
-        <View
-          style={{
-              flex: 1,
-              alignItems: "center",
-              justifyContent: "center",
-              flexDirection: "row",
-          }}
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "center",
+          alignSelf: 'center',
+        }}
       >
-        <View
+        <TouchableOpacity
+          activeOpacity={0.8}
           style={{
+            marginTop: 10,
+            backgroundColor: "black",
             flexDirection: "row",
-            justifyContent: "center",
-            width: "100%",
+            justifyContent: "space-between",
+            paddingVertical: 17,
+            paddingHorizontal: 20,
+            borderRadius: 30,
+            width: 300,
           }}
+          onPress={() => handleShowModal()}
         >
-          <TouchableOpacity
-            activeOpacity={0.8}
-            style={{
-              marginTop: 10,
-              backgroundColor: "black",
-              flexDirection: "row",
-              justifyContent: "space-between",
-              paddingVertical: 17,
-              paddingHorizontal: 20,
-              borderRadius: 30,
-              width: 300,
-            }}
-            onPress={() => handleShowModal()}
-          >
-            <Text style={{ color: "white", fontSize: 15, fontFamily: 'Poppins', fontWeight: '900'}}>
-              View Cart
-            </Text>
-            <Text style={{ color: "white", fontSize: 15, fontFamily: 'Poppins',  fontWeight: '900'}}>${totalPrice}</Text>
-          </TouchableOpacity>
-        </View>
+          <Text style={{ color: "white", fontSize: 15, fontFamily: 'Poppins', fontWeight: '900'}}>
+            View Cart
+          </Text>
+          <Text style={{ color: "white", fontSize: 15, fontFamily: 'Poppins',  fontWeight: '900'}}>${totalPrice}</Text>
+        </TouchableOpacity>
       </View>
     )
 }

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { View, SafeAreaView, ScrollView, StatusBar } from "react-native";
+import React, { useEffect, useLayoutEffect, useState } from "react";
+import { View, SafeAreaView, ScrollView, StatusBar, Text } from "react-native";
 import Categories from "../components/home/Categories";
 // import HeaderTabs from "../components/home/HeaderTabs";
 import RestaurantItems, { localRestaurants } from "../components/home/RestaurantItems";
@@ -11,7 +11,7 @@ const YELP_API_KEY =
 export default function Home({ navigation }) {
   const [restaurantData, setRestaurantData] = useState(localRestaurants);
   const [city, setCity] = useState("San Francisco");
-  const [activeTab, setActiveTab] = useState("Delivery");
+  const [activeCategory] = useState("Pickup");
 
   const getRestaurantsFromYelp = () => {
     const yelpUrl = `https://api.yelp.com/v3/businesses/search?term=restaurants&location=${city}`;
@@ -27,7 +27,7 @@ export default function Home({ navigation }) {
       .then((json) => {
         setRestaurantData(
           json.businesses.filter((business) =>
-            business.transactions.includes(activeTab.toLowerCase())
+            business.transactions.includes(activeCategory.toLowerCase())
           )
         )
       });
@@ -35,22 +35,28 @@ export default function Home({ navigation }) {
 
   useEffect(() => {
     getRestaurantsFromYelp();
-  }, [city, activeTab]);
+  }, [city]);
 
   return (
     <SafeAreaView style={{ backgroundColor: "#fff", flex: 1 }}>
-      {/* <View style={{ backgroundColor: "white", padding: 15 }}>
-        <HeaderTabs activeTab={activeTab} setActiveTab={setActiveTab} />
-        <SearchBar cityHandler={setCity} />
-      </View> */}
-      <StatusBar backgroundColor='#fff' barStyle="dark-content"  />
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <Categories />
-        <RestaurantItems
-          restaurantData={restaurantData}
-          navigation={navigation}
-        />
-      </ScrollView>
+      <StatusBar backgroundColor='white' barStyle='light-content' />
+      <View style={{ paddingTop: StatusBar.currentHeight,}}>
+        <View style={{marginHorizontal: 20, paddingVertical: 20 }}>
+          <Text style={{ fontFamily: 'PoppinsBold', fontSize: 26}}>Good morning, Odunayo</Text>
+          <Text style={{ fontFamily: 'Poppins', fontSize: 20}}>
+            Find good meals around you
+          </Text>
+        </View>
+        <StatusBar backgroundColor='#fff' barStyle="dark-content"  />
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <Categories />
+          {/* <Divider /> */}
+          <RestaurantItems
+            restaurantData={restaurantData}
+            navigation={navigation}
+          />
+        </ScrollView>
+      </View>
     </SafeAreaView>
   );
 }

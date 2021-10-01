@@ -1,86 +1,63 @@
-import React, { useRef, useState } from 'react'
-import { View, Text, StyleSheet, TouchableOpacity} from 'react-native'
-import Entypo from 'react-native-vector-icons/Entypo';
+import React from 'react'
+import { View, Text, StyleSheet } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { UPDATE_ITEM_IN_CART } from '../../redux/actionsType';
+import QuantityPicker from './QuantityPicker';
 
 export default function FoodInfo(props) {
-  const [quantity, setQuantity] = useState(1);
   const { selectedItems } = useSelector((state) => state.cart);
   const { name: resName } = useSelector((state) => state.cart.selectedRestaurant);
   
   const dispatch = useDispatch();
-  const currentQuantityValueRef = useRef();
-  currentQuantityValueRef.current = quantity;
 
   const restaurantSelectedItems = selectedItems.filter(item => item.restaurantName === resName);
 
-  const updateItemPrice = () => {
-    console.log();
-    // const itemToUpdate = restaurantSelectedItems.filter(item => item.id === props.food.id);
+  const updateItemPrice = (action, value) => {
+    let itemQuantity;
 
-    // if(itemToUpdate.length > 0){
-    //   const price = itemToUpdate[0]?.price.replace(/\D/g,'');
-    //   const itemNewPrice = ((price / 100) * quantity).toFixed(2);
+    if(action === 'add'){
+     itemQuantity = value + 1;
+    }else{
+      itemQuantity =  value - 1;
+    }
 
-    //   const updatedItem = {
-    //     ...itemToUpdate[0],
-    //     price: `$${itemNewPrice}`,
-    //     quantity
-    //   };
+    const itemToUpdate = restaurantSelectedItems.filter(item => item.id === props.food.id);
 
-    //   console.log(updatedItem);
+    if(itemToUpdate.length > 0){
+      const price = itemToUpdate[0]?.price.replace(/\D/g,'');
+      const itemNewPrice = ((price / 100) * itemQuantity).toFixed(2);
 
-      // dispatch({
-      //   type: UPDATE_ITEM_IN_CART,
-      //   payload: updatedItem
-      // });
-    // }
+      const updatedItem = {
+        ...itemToUpdate[0],
+        price: `$${itemNewPrice}`,
+        quantity:  itemQuantity
+      };
+
+      console.log(updatedItem);
+
+      dispatch({
+        type: UPDATE_ITEM_IN_CART,
+        payload: updatedItem
+      });
+    }
   };
 
   return (
-      <View style={{ width: 240, justifyContent: "space-evenly" }}>
-          <Text style={styles.titleStyle}>{props.food.title}</Text>
-          <Text style={styles.description}>{props.food.description}</Text>
+    <View style={{ width: 240, justifyContent: "space-evenly" }}>
+      <Text style={styles.titleStyle}>{props.food.title}</Text>
+      <Text style={styles.description}>{props.food.description}</Text>
 
-          <View style={styles.detailContainer}>
-            <Text style={styles.titleStyle}>
-              {props.food.price}
-            </Text>
+      <View style={styles.detailContainer}>
+        <Text style={styles.titleStyle}>
+          {props.food.price}
+        </Text>
 
-            <View style={{
-              display: 'flex', 
-              flexDirection: 'row',
-            }}>
-              <TouchableOpacity 
-                disabled={quantity === 1}
-                style={styles.subtractBtn} 
-                activeOpacity={0.8} 
-                onPress={() => {
-                  setQuantity(prevState => prevState - 1);
-                }}
-              >
-                <Entypo name='minus' color='#000' size={20} />
-              </TouchableOpacity>
-
-              <Text
-                style={styles.titleStyle}
-              >
-                {props.food.quantity ? props.food.quantity : quantity}
-              </Text>
-
-              <TouchableOpacity 
-                style={styles.addBtn} 
-                activeOpacity={0.8} 
-                onPress={() => {
-                  setQuantity(prevState => prevState + 1);
-                }}
-              >
-                <Entypo name='plus' color='white' size={20} />
-              </TouchableOpacity>
-            </View>
-        </View>
-      </View>   
+        <QuantityPicker 
+          food={props.food} 
+          handleOnChange={updateItemPrice} 
+        />
+      </View>
+    </View>   
   )
 }
 
